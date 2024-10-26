@@ -1,8 +1,9 @@
 import { $ } from "../../lib/Pen.js";
 $.use(update);
 
-$.debug = true;
+//$.debug = true;
 
+/*
 const redBall = $.makeCircleCollider(10, 200, 50);
 redBall.speed = 25;
 redBall.direction = 90;
@@ -18,10 +19,13 @@ for (let i = 0; i < 100; i++) {
     square.friction = 0;
     squares.push(square);
 }
+*/
 
 //setup the game, only called on frame 0
 function setup(){
     console.log('we HOT!');
+    $.w = 1320;
+    $.h = 600;
 }
 
 //main game loop
@@ -30,7 +34,7 @@ function update() {
         setup();
     }
 
-    if(redBall.collides(squares)){
+    /*if(redBall.collides(squares)){
         console.log("1. ball hit squares",redBall.collides(squares)); 
         console.log("speed is",redBall.speed);
     }
@@ -38,5 +42,5 @@ function update() {
         console.log("2. squares hit balls",redBall.collides(squares));
     }
     redBall.draw();
-    squares.draw();
+    squares.draw();*/
 }
