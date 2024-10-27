@@ -13,7 +13,7 @@ square.asset = fort_icon;
 //setup the game, only called on frame 0
 function setup(){
     console.log('we HOT!');
-    $.w = 1320;
+    $.w = 1470;
     $.h = 600;
 }
 
@@ -49,4 +49,43 @@ function update() {
 
     $.shape.line(300,80,740,250)
     $.shape.line(320,0,765,185)
+
+    //base
+    $.colour.stroke = "#00ff1a";
+    $.colour.fill = "#ffffff";
+    $.shape.rectangle(($.w/2)+330,320,450,500)
+
+    //base healthbar red
+    $.colour.stroke = "#000000";
+    $.colour.fill = "#ff1e00";
+    $.shape.rectangle (($.w/2)+330,55,450,18)
+
+    //base healthbar green
+    $.colour.stroke = "#000000";
+    $.colour.fill = "#00ff1a";
+    $.shape.rectangle (($.w/2)+305,55,400,18)
+
+    //base tiles
+    $.colour.stroke = "#ffaa00";
+    //$.shape.strokeWidth=2;
+    $.colour.fill = "#ffffff";
+    $.shape.rectangle (($.w/2)+185,120,100,80)
+    $.shape.rectangle (($.w/2)+330,120,100,80)
+    $.shape.rectangle (($.w/2)+475,120,100,80)
+    
+    $.shape.rectangle (($.w/2)+185,220,100,80)
+    $.shape.rectangle (($.w/2)+330,220,100,80)
+    $.shape.rectangle (($.w/2)+475,220,100,80)
+
+    $.shape.rectangle (($.w/2)+185,320,100,80)
+    $.shape.rectangle (($.w/2)+330,320,100,80)
+    $.shape.rectangle (($.w/2)+475,320,100,80)
+
+    $.shape.rectangle (($.w/2)+185,420,100,80)
+    $.shape.rectangle (($.w/2)+330,420,100,80)
+    $.shape.rectangle (($.w/2)+475,420,100,80)
+
+    $.shape.rectangle (($.w/2)+185,520,100,80)
+    $.shape.rectangle (($.w/2)+330,520,100,80)
+    $.shape.rectangle (($.w/2)+475,520,100,80)
 }
