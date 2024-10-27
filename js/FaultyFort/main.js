@@ -3,9 +3,12 @@ $.use(update);
 
 //$.debug = true;
 
+let fort_icon = $.loadImage(0,0,"../images/Fort_Icon.jpg");
+
 //fort square
 const square = $.makeBoxCollider($.w - 20, $.h/2, 100, 100);
-square.fill = "#fcf403";
+//square.fill = "#fcf403";
+square.asset = fort_icon;
 
 //setup the game, only called on frame 0
 function setup(){
