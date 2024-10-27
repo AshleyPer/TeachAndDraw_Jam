@@ -42,4 +42,11 @@ function update() {
     $.colour.stroke = "#000000";
     //enemy spawn3 top
     $.shape.oval(300,$.h-40,40,40,);
+    $.colour.stroke = "#DCDCDC";
+    $.colour.fill = "#00000000";
+
+    $.shape.arc(740,250, 100,100, 20,90)
+
+    $.shape.line(300,80,740,250)
+    $.shape.line(320,0,765,185)
 }
