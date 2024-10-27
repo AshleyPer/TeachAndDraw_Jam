@@ -1,7 +1,7 @@
 import { $ } from "../../lib/Pen.js";
 $.use(update);
 
-//$.debug = true;
+$.debug = true;
 
 let fort_icon = $.loadImage(0,0,"../images/Fort_Icon.jpg");
 
@@ -40,7 +40,7 @@ function update() {
     $.shape.line(70,($.h/2)+40,($.w/2)+70,($.h/2)+40)
 
     $.colour.stroke = "#000000";
-    //enemy spawn3 top
+    //enemy spawn3 bottom
     $.shape.oval(300,$.h-40,40,40,);
     $.colour.stroke = "#DCDCDC";
     $.colour.fill = "#00000000";
@@ -88,4 +88,8 @@ function update() {
     $.shape.rectangle (($.w/2)+185,520,100,80)
     $.shape.rectangle (($.w/2)+330,520,100,80)
     $.shape.rectangle (($.w/2)+475,520,100,80)
+    $.shape.arc(740,350, 100,100, 90,160)
+
+    $.shape.line(300,520,740,350)
+    $.shape.line(320,0,765,185)
 }
