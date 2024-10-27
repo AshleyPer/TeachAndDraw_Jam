@@ -1,7 +1,9 @@
 import { $ } from "../../lib/Pen.js";
+import BaseTile from "../FaultyFort/Classes/BaseTile.js"
+
 $.use(update);
 
-$.debug = true;
+//$.debug = true;
 
 let fort_icon = $.loadImage(0,0,"../images/Fort_Icon.jpg");
 
@@ -10,11 +12,29 @@ const square = $.makeBoxCollider($.w - 20, $.h/2, 100, 100);
 //square.fill = "#fcf403";
 square.asset = fort_icon;
 
+//set canvas dimensions
+$.w = 1470;
+$.h = 600;
+
+const baseTile1 = new BaseTile(($.w/2)+185,120,100,80);
+const baseTile2 = new BaseTile(($.w/2)+330,120,100,80);
+const baseTile3 = new BaseTile(($.w/2)+475,120,100,80);
+const baseTile4 = new BaseTile(($.w/2)+185,220,100,80);
+const baseTile5 = new BaseTile(($.w/2)+330,220,100,80);
+const baseTile6 = new BaseTile(($.w/2)+475,220,100,80);
+const baseTile7 = new BaseTile(($.w/2)+185,320,100,80);
+const baseTile8 = new BaseTile(($.w/2)+330,320,100,80);
+const baseTile9 = new BaseTile(($.w/2)+475,320,100,80);
+const baseTile10 = new BaseTile(($.w/2)+185,420,100,80);
+const baseTile11 = new BaseTile(($.w/2)+330,420,100,80);
+const baseTile12 = new BaseTile(($.w/2)+475,420,100,80);
+const baseTile13 = new BaseTile(($.w/2)+185,520,100,80);
+const baseTile14 = new BaseTile(($.w/2)+330,520,100,80);
+const baseTile15 = new BaseTile(($.w/2)+475,520,100,80);
+
 //setup the game, only called on frame 0
 function setup(){
     console.log('we HOT!');
-    $.w = 1470;
-    $.h = 600;
 }
 
 //main game loop
@@ -40,6 +60,7 @@ function update() {
     $.shape.line(70,($.h/2)+40,($.w/2)+70,($.h/2)+40)
 
     $.colour.stroke = "#000000";
+    
     //enemy spawn3 bottom
     $.shape.oval(300,$.h-40,40,40,);
     $.colour.stroke = "#DCDCDC";
@@ -49,7 +70,34 @@ function update() {
 
     $.shape.line(300,80,740,250)
     $.shape.line(320,0,765,185)
+    $.shape.arc(740,350, 100,100, 90,160)
 
+    $.shape.line(300,520,740,350)
+    $.shape.line(320,0,765,185)
+
+    drawBaseStuff();
+}
+
+//draw base tiles
+function drawTiles(){
+    baseTile1.drawTile();
+    baseTile2.drawTile();
+    baseTile3.drawTile();
+    baseTile4.drawTile();
+    baseTile5.drawTile();
+    baseTile6.drawTile();
+    baseTile7.drawTile();
+    baseTile8.drawTile();
+    baseTile9.drawTile();
+    baseTile10.drawTile();
+    baseTile11.drawTile();
+    baseTile12.drawTile();
+    baseTile13.drawTile();
+    baseTile14.drawTile();
+    baseTile15.drawTile();
+}
+
+function drawBaseStuff(){
     //base
     $.colour.stroke = "#00ff1a";
     $.colour.fill = "#ffffff";
@@ -67,29 +115,7 @@ function update() {
 
     //base tiles
     $.colour.stroke = "#ffaa00";
-    //$.shape.strokeWidth=2;
     $.colour.fill = "#ffffff";
-    $.shape.rectangle (($.w/2)+185,120,100,80)
-    $.shape.rectangle (($.w/2)+330,120,100,80)
-    $.shape.rectangle (($.w/2)+475,120,100,80)
-    
-    $.shape.rectangle (($.w/2)+185,220,100,80)
-    $.shape.rectangle (($.w/2)+330,220,100,80)
-    $.shape.rectangle (($.w/2)+475,220,100,80)
 
-    $.shape.rectangle (($.w/2)+185,320,100,80)
-    $.shape.rectangle (($.w/2)+330,320,100,80)
-    $.shape.rectangle (($.w/2)+475,320,100,80)
-
-    $.shape.rectangle (($.w/2)+185,420,100,80)
-    $.shape.rectangle (($.w/2)+330,420,100,80)
-    $.shape.rectangle (($.w/2)+475,420,100,80)
-
-    $.shape.rectangle (($.w/2)+185,520,100,80)
-    $.shape.rectangle (($.w/2)+330,520,100,80)
-    $.shape.rectangle (($.w/2)+475,520,100,80)
-    $.shape.arc(740,350, 100,100, 90,160)
-
-    $.shape.line(300,520,740,350)
-    $.shape.line(320,0,765,185)
+    drawTiles();
 }
