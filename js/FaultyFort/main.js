@@ -1,5 +1,4 @@
 import { $ } from "../../lib/Pen.js";
-import BaseTile from "../FaultyFort/Classes/BaseTile.js"
 
 $.use(update);
 
@@ -16,21 +15,24 @@ square.asset = fort_icon;
 $.w = 1470;
 $.h = 600;
 
-const baseTile1 = new BaseTile(($.w/2)+185,120,100,80);
-const baseTile2 = new BaseTile(($.w/2)+330,120,100,80);
-const baseTile3 = new BaseTile(($.w/2)+475,120,100,80);
-const baseTile4 = new BaseTile(($.w/2)+185,220,100,80);
-const baseTile5 = new BaseTile(($.w/2)+330,220,100,80);
-const baseTile6 = new BaseTile(($.w/2)+475,220,100,80);
-const baseTile7 = new BaseTile(($.w/2)+185,320,100,80);
-const baseTile8 = new BaseTile(($.w/2)+330,320,100,80);
-const baseTile9 = new BaseTile(($.w/2)+475,320,100,80);
-const baseTile10 = new BaseTile(($.w/2)+185,420,100,80);
-const baseTile11 = new BaseTile(($.w/2)+330,420,100,80);
-const baseTile12 = new BaseTile(($.w/2)+475,420,100,80);
-const baseTile13 = new BaseTile(($.w/2)+185,520,100,80);
-const baseTile14 = new BaseTile(($.w/2)+330,520,100,80);
-const baseTile15 = new BaseTile(($.w/2)+475,520,100,80);
+const baseTiles = [];
+
+//add base tiles to the array
+baseTiles.push({x: ($.w/2)+185, y: 120, width: 100, height: 80, minClickX: (($.w/2)+185)-(100/2), maxClickX: (($.w/2)+185)+(100/2), minClickY: 120-(80/2), maxClickY: 120+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+330, y: 120, width: 100, height: 80, minClickX: (($.w/2)+330)-(100/2), maxClickX: (($.w/2)+330)+(100/2), minClickY: 120-(80/2), maxClickY: 120+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+475, y: 120, width: 100, height: 80, minClickX: (($.w/2)+475)-(100/2), maxClickX: (($.w/2)+475)+(100/2), minClickY: 120-(80/2), maxClickY: 120+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+185, y: 220, width: 100, height: 80, minClickX: (($.w/2)+185)-(100/2), maxClickX: (($.w/2)+185)+(100/2), minClickY: 220-(80/2), maxClickY: 220+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+330, y: 220, width: 100, height: 80, minClickX: (($.w/2)+330)-(100/2), maxClickX: (($.w/2)+330)+(100/2), minClickY: 220-(80/2), maxClickY: 220+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+475, y: 220, width: 100, height: 80, minClickX: (($.w/2)+475)-(100/2), maxClickX: (($.w/2)+475)+(100/2), minClickY: 220-(80/2), maxClickY: 220+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+185, y: 320, width: 100, height: 80, minClickX: (($.w/2)+185)-(100/2), maxClickX: (($.w/2)+185)+(100/2), minClickY: 320-(80/2), maxClickY: 320+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+330, y: 320, width: 100, height: 80, minClickX: (($.w/2)+330)-(100/2), maxClickX: (($.w/2)+330)+(100/2), minClickY: 320-(80/2), maxClickY: 320+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+475, y: 320, width: 100, height: 80, minClickX: (($.w/2)+475)-(100/2), maxClickX: (($.w/2)+475)+(100/2), minClickY: 320-(80/2), maxClickY: 320+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+185, y: 420, width: 100, height: 80, minClickX: (($.w/2)+185)-(100/2), maxClickX: (($.w/2)+185)+(100/2), minClickY: 420-(80/2), maxClickY: 420+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+330, y: 420, width: 100, height: 80, minClickX: (($.w/2)+330)-(100/2), maxClickX: (($.w/2)+330)+(100/2), minClickY: 420-(80/2), maxClickY: 420+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+475, y: 420, width: 100, height: 80, minClickX: (($.w/2)+475)-(100/2), maxClickX: (($.w/2)+475)+(100/2), minClickY: 420-(80/2), maxClickY: 420+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+185, y: 520, width: 100, height: 80, minClickX: (($.w/2)+185)-(100/2), maxClickX: (($.w/2)+185)+(100/2), minClickY: 520-(80/2), maxClickY: 520+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+330, y: 520, width: 100, height: 80, minClickX: (($.w/2)+330)-(100/2), maxClickX: (($.w/2)+330)+(100/2), minClickY: 520-(80/2), maxClickY: 520+(80/2), blank: true, text: "Click me!"})
+baseTiles.push({x: ($.w/2)+475, y: 520, width: 100, height: 80, minClickX: (($.w/2)+475)-(100/2), maxClickX: (($.w/2)+475)+(100/2), minClickY: 520-(80/2), maxClickY: 520+(80/2), blank: true, text: "Click me!"})
 
 //setup the game, only called on frame 0
 function setup(){
@@ -75,26 +77,28 @@ function update() {
     $.shape.line(300,520,740,350)
     $.shape.line(320,0,765,185)
 
+    //draw the base
     drawBaseStuff();
+
+    //check if the user clicked
+    if($.mouse.leftReleased){
+        userClicked();
+    }
 }
 
 //draw base tiles
 function drawTiles(){
-    baseTile1.drawTile();
-    baseTile2.drawTile();
-    baseTile3.drawTile();
-    baseTile4.drawTile();
-    baseTile5.drawTile();
-    baseTile6.drawTile();
-    baseTile7.drawTile();
-    baseTile8.drawTile();
-    baseTile9.drawTile();
-    baseTile10.drawTile();
-    baseTile11.drawTile();
-    baseTile12.drawTile();
-    baseTile13.drawTile();
-    baseTile14.drawTile();
-    baseTile15.drawTile();
+    for(let i = 0; i < baseTiles.length; i++){
+        $.colour.fill = "#ffffff";
+        $.shape.rectangle(baseTiles[i].x,baseTiles[i].y,baseTiles[i].width,baseTiles[i].height);
+
+        if(baseTiles[i].text === "Click me!"){
+            $.colour.fill = "#000000";
+        }else{
+            $.colour.fill = "#ffaa00";
+        }
+        $.text.print(baseTiles[i].x,baseTiles[i].y,baseTiles[i].text,50);
+    }
 }
 
 function drawBaseStuff(){
@@ -118,4 +122,74 @@ function drawBaseStuff(){
     $.colour.fill = "#ffffff";
 
     drawTiles();
+}
+
+//handle if a user clicked
+function userClicked(){
+    //check if the user clicked in range of a base tile
+    for(let i = 0; i < baseTiles.length; i++){
+        if(baseTiles[i].blank === false){
+            continue;
+        }
+        if($.mouse.x >= baseTiles[i].minClickX && $.mouse.y >= baseTiles[i].minClickY && $.mouse.x <= baseTiles[i].maxClickX && $.mouse.y <= baseTiles[i].maxClickY){
+            let popup = document.querySelector("#base-popup-box");
+            popup.clicked=i;
+            popup.style.display = "block";
+        }
+    }
+}
+
+//add event handlers to the buttons for the base tile popup
+document.getElementById("goldMine").addEventListener("click", addGoldMine);
+document.getElementById("heavy").addEventListener("click", addHeavy);
+document.getElementById("light").addEventListener("click", addLight);
+document.getElementById("archer").addEventListener("click", addArcher);
+
+//functions for "adding" the tile to the base
+function addGoldMine(){
+    let popup = document.querySelector("#base-popup-box");
+    for(let i = 0; i < baseTiles.length; i++){
+        if(i === popup.clicked){
+            baseTiles[i].blank = false;
+            baseTiles[i].text = "+10 Gold";
+        }
+    }
+    popup.style.display = "none";
+}
+function addHeavy(){
+    let popup = document.querySelector("#base-popup-box");
+    for(let i = 0; i < baseTiles.length; i++){
+        if(i === popup.clicked){
+            baseTiles[i].blank = false;
+            baseTiles[i].text = "+1 Heavy";
+        }
+    }
+    popup.style.display = "none";
+}
+function addLight(){
+    let popup = document.querySelector("#base-popup-box");
+    for(let i = 0; i < baseTiles.length; i++){
+        if(i === popup.clicked){
+            baseTiles[i].blank = false;
+            baseTiles[i].text = "+2 Light";
+        }
+    }
+    popup.style.display = "none";
+}
+function addArcher(){
+    let popup = document.querySelector("#base-popup-box");
+    for(let i = 0; i < baseTiles.length; i++){
+        if(i === popup.clicked){
+            baseTiles[i].blank = false;
+            baseTiles[i].text = "+1 Archer";
+        }
+    }
+    popup.style.display = "none";
+}
+
+//if user clicks on the window, and the popup box is open, close it
+window.onclick = function(event) {
+    if (event.target.id == "base-popup-box") {
+        event.target.style.display = "none";
+    }
 }
