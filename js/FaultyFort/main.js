@@ -15,6 +15,14 @@ square.asset = fort_icon;
 $.w = 1470;
 $.h = 600;
 
+let currentGold = 200;
+
+//gold cost of tiles
+const goldTileCost = 150;
+const heavyTileCost = 100;
+const lightTileCost = 50;
+const archerTileCost = 50;
+
 const baseTiles = [];
 
 //add base tiles to the array
@@ -84,6 +92,11 @@ function update() {
     if($.mouse.leftReleased){
         userClicked();
     }
+
+    $.colour.fill = "#f7ee97";
+    $.shape.rectangle(($.w/2)+172,24,130,40)
+    $.colour.fill = "#6b4801";
+    $.text.print(($.w/2)+160,25,`Money: ${currentGold.toString()}G`,100);
 }
 
 //draw base tiles
@@ -122,6 +135,8 @@ function drawBaseStuff(){
     $.colour.fill = "#ffffff";
 
     drawTiles();
+
+
 }
 
 //handle if a user clicked
@@ -147,6 +162,24 @@ document.getElementById("archer").addEventListener("click", addArcher);
 
 //functions for "adding" the tile to the base
 function addGoldMine(){
+    let goldError = document.querySelector("#goldError");
+
+    if(goldError !== null){
+        goldError.remove();
+    }
+
+    //user does not have enough gold
+    if(currentGold < goldTileCost){
+        let popupContent = document.querySelector("#popup-content");
+
+        const newSpan = popupContent.appendChild(document.createElement("span"));
+        newSpan.id = "goldError"
+        newSpan.innerHTML = "You don't have enough gold!";
+        newSpan.style.color = "red";
+        newSpan.style.paddingTop = "10px";
+        return;
+    }
+
     let popup = document.querySelector("#base-popup-box");
     for(let i = 0; i < baseTiles.length; i++){
         if(i === popup.clicked){
@@ -155,8 +188,26 @@ function addGoldMine(){
         }
     }
     popup.style.display = "none";
+    currentGold-= goldTileCost;
 }
 function addHeavy(){
+    let goldError = document.querySelector("#goldError");
+
+    if(goldError !== null){
+        goldError.remove();
+    }
+    //user does not have enough gold
+    if(currentGold < heavyTileCost){
+        let popupContent = document.querySelector("#popup-content");
+
+        const newSpan = popupContent.appendChild(document.createElement("span"));
+        newSpan.id = "goldError"
+        newSpan.innerHTML = "You don't have enough gold!";
+        newSpan.style.color = "red";
+        newSpan.style.paddingTop = "10px";
+        return;
+    }
+
     let popup = document.querySelector("#base-popup-box");
     for(let i = 0; i < baseTiles.length; i++){
         if(i === popup.clicked){
@@ -165,8 +216,27 @@ function addHeavy(){
         }
     }
     popup.style.display = "none";
+    currentGold-= heavyTileCost;
 }
 function addLight(){
+    let goldError = document.querySelector("#goldError");
+
+    if(goldError !== null){
+        goldError.remove();
+    }
+
+    //user does not have enough gold
+    if(currentGold < lightTileCost){
+        let popupContent = document.querySelector("#popup-content");
+
+        const newSpan = popupContent.appendChild(document.createElement("span"));
+        newSpan.id = "goldError"
+        newSpan.innerHTML = "You don't have enough gold!";
+        newSpan.style.color = "red";
+        newSpan.style.paddingTop = "10px";
+        return;
+    }
+
     let popup = document.querySelector("#base-popup-box");
     for(let i = 0; i < baseTiles.length; i++){
         if(i === popup.clicked){
@@ -175,8 +245,27 @@ function addLight(){
         }
     }
     popup.style.display = "none";
+    currentGold-= lightTileCost;
 }
 function addArcher(){
+    let goldError = document.querySelector("#goldError");
+
+    if(goldError !== null){
+        goldError.remove();
+    }
+
+    //user does not have enough gold
+    if(currentGold < archerTileCost){
+        let popupContent = document.querySelector("#popup-content");
+
+        const newSpan = popupContent.appendChild(document.createElement("span"));
+        newSpan.id = "goldError"
+        newSpan.innerHTML = "You don't have enough gold!";
+        newSpan.style.color = "red";
+        newSpan.style.paddingTop = "10px";
+        return;
+    }
+
     let popup = document.querySelector("#base-popup-box");
     for(let i = 0; i < baseTiles.length; i++){
         if(i === popup.clicked){
@@ -185,11 +274,17 @@ function addArcher(){
         }
     }
     popup.style.display = "none";
+    currentGold-= archerTileCost;
 }
 
 //if user clicks on the window, and the popup box is open, close it
 window.onclick = function(event) {
     if (event.target.id == "base-popup-box") {
         event.target.style.display = "none";
+        let goldError = document.querySelector("#goldError");
+
+        if(goldError !== null){
+            goldError.remove();
+        }
     }
 }
