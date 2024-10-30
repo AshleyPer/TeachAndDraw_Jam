@@ -16,6 +16,7 @@ export default class Friendly {
     makeCollider(){
         this.collider = $.makeBoxCollider(this.x,this.y,this.width,this.height);
         this.collider.fill = "#00ff37";
+        this.collider.static = true;
         /*this.collider.speed = this.speed;
         this.collider.direction = 90;
         this.collider.friction = 0;*/
@@ -24,5 +25,27 @@ export default class Friendly {
     //draw the collider (might not be used if the collider is going to be added to a group)
     drawCollider(){
         this.collider.draw();
+    }
+
+    drawHealthBar(){
+        //need rectangle for max health
+        //need rectangle for current health
+    }
+
+    //check if an enemy is in attack range
+    checkTargetInRange(){
+
+    }
+
+    //friendly takes damage
+    takeDamage(damage){
+        //check if the friendly still lives
+        if(damage < this.currentHealth){
+            this.currentHealth -= damage;
+        }else{
+            //friendly is dead...
+            this.collider.remove();
+            //also need to remove the instance of the class later
+        }
     }
 }

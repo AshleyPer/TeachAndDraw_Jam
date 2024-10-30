@@ -10,6 +10,7 @@ export default class Enemy {
         this.resistance = resistance;
         this.speed = speed;
         this.currentHealth = maxHealth;
+        this.shooting = false;
     }
 
     //make the collider
@@ -24,5 +25,15 @@ export default class Enemy {
     //draw the collider (might not be used if the collider is going to be added to a group)
     drawCollider(){
         this.collider.draw();
+    }
+
+    //check if a friendly or fort is in attack range
+    checkTargetInRange(targetX){
+        if(targetX - this.collider.x <= this.attackRange){
+            this.collider.speed = 0;
+            console.log("target is in range!!");
+            //time to get the enemy to start firing!
+            this.shooting = true;
+        }
     }
 }

@@ -2,6 +2,7 @@ import { $ } from "../../lib/Pen.js";
 import Enemy from "./Classes/Enemy.js";
 import Fort from "./Classes/Fort.js";
 import Friendly from "./Classes/Friendly.js";
+import Arrow from "./Classes/Arrow.js";
 
 $.use(update);
 
@@ -43,8 +44,13 @@ baseTiles.push({x: ($.w/2)+185, y: 520, width: 100, height: 80, minClickX: (($.w
 baseTiles.push({x: ($.w/2)+330, y: 520, width: 100, height: 80, minClickX: (($.w/2)+330)-(100/2), maxClickX: (($.w/2)+330)+(100/2), minClickY: 520-(80/2), maxClickY: 520+(80/2), blank: true, text: "Click me!"})
 baseTiles.push({x: ($.w/2)+475, y: 520, width: 100, height: 80, minClickX: (($.w/2)+475)-(100/2), maxClickX: (($.w/2)+475)+(100/2), minClickY: 520-(80/2), maxClickY: 520+(80/2), blank: true, text: "Click me!"})
 
-const firstEnemy = new Enemy(100, 296, 40, 40, 200, 20, 20, 0, 2);
+//temporarily setting speed high, for development purposes
+let enemySpeed = 10;
+const firstEnemy = new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed);
+
 const firstFriendly = new Friendly($.w/2 - 20, $.h/2, 40, 40, 200, 20, 20, 0, 2);
+
+const enemyFiringGroup = $.makeGroup();
 
 //setup the game, only called on frame 0
 function setup(){
@@ -110,6 +116,23 @@ function update() {
 
     //draw the first enemy
     firstEnemy.drawCollider();
+
+    firstEnemy.checkTargetInRange(firstFriendly.collider.x);
+
+    if(firstEnemy.shooting === true){
+        enemyFiring();
+    }
+
+    enemyFiringGroup.draw();
+
+    //loop through the enemy firing group and check if an arrow collides with a friendly
+    for (let arrow of enemyFiringGroup) {
+        if (arrow.collides(firstFriendly.collider)) {
+            console.log("bullet collided with friendly?")
+            friendlyHit(firstFriendly, arrow);
+        }
+    }
+    
 }
 
 //draw base tiles
@@ -312,4 +335,29 @@ function debugStuff(){
         $.text.print($.mouse.x,$.mouse.y-40, `mouse x= ${$.mouse.x}`, 150);
         $.text.print($.mouse.x,$.mouse.y-20, `mouse y= ${$.mouse.y}`, 150);
     }
+}
+
+//enemy firing
+function enemyFiring(){
+    //x,y,width,height,damage,speed
+    if(enemyFiringGroup.length === 0){
+        enemyFiringGroup.push(createArrow());
+    }
+}
+
+//create arrow
+function createArrow(){
+    const arrow = $.makeBoxCollider(firstEnemy.collider.x+20,firstEnemy.collider.y,30,10);
+    arrow.fill = "#0009bd";
+    arrow.speed = 3;
+    arrow.direction = 90;
+    arrow.friction = 0;
+    arrow.damage = 30;
+    return arrow;
+}
+
+//friendly hit
+function friendlyHit(friendly, arrow){
+    friendly.takeDamage(arrow.damage);
+    arrow.remove();
 }
