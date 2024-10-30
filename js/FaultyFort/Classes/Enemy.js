@@ -28,12 +28,16 @@ export default class Enemy {
     }
 
     //check if a friendly or fort is in attack range
-    checkTargetInRange(targetX){
-        if(targetX - this.collider.x <= this.attackRange){
+    checkTargetInRange(target){
+        console.log("target=", target)
+        if((target.x - this.collider.x) <= this.attackRange && target.exists === true){
             this.collider.speed = 0;
             console.log("target is in range!!");
             //time to get the enemy to start firing!
             this.shooting = true;
+        }else{
+            console.log("this.collider.speed=", this.collider.speed)
+            this.collider.speed = this.speed;
         }
     }
 }

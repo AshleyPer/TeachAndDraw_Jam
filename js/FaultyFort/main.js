@@ -118,7 +118,8 @@ function update() {
     //draw the first enemy
     firstEnemy.drawCollider();
 
-    firstEnemy.checkTargetInRange(firstFriendly.collider.x);
+    firstEnemy.checkTargetInRange(fort.collider);
+    //firstEnemy.checkTargetInRange(firstFriendly.collider);
 
     if(firstEnemy.shooting === true){
         enemyFiring();
@@ -131,6 +132,10 @@ function update() {
         if (arrow.collides(firstFriendly.collider)) {
             console.log("bullet collided with friendly?")
             friendlyHit(firstFriendly, arrow);
+        }
+        if (arrow.collides(fort.collider)) {
+            console.log("bullet collided with fort?")
+            fortHit(fort, arrow);
         }
     }
     
@@ -157,15 +162,18 @@ function drawBaseStuff(){
     $.colour.fill = "#ffffff";
     $.shape.rectangle(($.w/2)+330,320,450,500)
 
-    //base healthbar red
-    $.colour.stroke = "#000000";
-    $.colour.fill = "#ff1e00";
-    $.shape.rectangle (($.w/2)+330,55,450,18)
+    /*
+        //base healthbar red
+        $.colour.stroke = "#000000";
+        $.colour.fill = "#ff1e00";
+        $.shape.rectangle (($.w/2)+330,55,450,18)
 
-    //base healthbar green
-    $.colour.stroke = "#000000";
-    $.colour.fill = "#00ff1a";
-    $.shape.rectangle (($.w/2)+305,55,400,18)
+        //base healthbar green
+        $.colour.stroke = "#000000";
+        $.colour.fill = "#00ff1a";
+        $.shape.rectangle (($.w/2)+305,55,400,18)
+    */
+    fort.drawHealthBar();
 
     //base tiles
     $.colour.stroke = "#ffaa00";
@@ -362,5 +370,11 @@ function createArrow(){
 //friendly hit
 function friendlyHit(friendly, arrow){
     friendly.takeDamage(arrow.damage);
+    arrow.remove();
+}
+
+//friendly hit
+function fortHit(fort, arrow){
+    fort.takeDamage(arrow.damage);
     arrow.remove();
 }
