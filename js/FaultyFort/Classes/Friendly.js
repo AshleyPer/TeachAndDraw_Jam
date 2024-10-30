@@ -27,9 +27,17 @@ export default class Friendly {
         this.collider.draw();
     }
 
+    //draw friendly health bars
     drawHealthBar(){
-        //need rectangle for max health
-        //need rectangle for current health
+        if(this.currentHealth > 0){
+            //max health
+            $.colour.fill = "#ff2f00";
+            $.shape.rectangle(this.x, this.y-35, this.maxHealth/2, 10)
+
+            //current health
+            $.colour.fill = "#2bff00";
+            $.shape.rectangle(this.x - (this.maxHealth-this.currentHealth), this.y-35, this.currentHealth/2, 10)
+        }
     }
 
     //check if an enemy is in attack range
@@ -39,10 +47,9 @@ export default class Friendly {
 
     //friendly takes damage
     takeDamage(damage){
+        this.currentHealth -= damage;
         //check if the friendly still lives
-        if(damage < this.currentHealth){
-            this.currentHealth -= damage;
-        }else{
+        if(this.currentHealth <= 0){
             //friendly is dead...
             this.collider.remove();
             //also need to remove the instance of the class later

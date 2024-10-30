@@ -68,6 +68,7 @@ function update() {
 
     fort.drawCollider();
     firstFriendly.drawCollider();
+    firstFriendly.drawHealthBar();
 
     $.colour.stroke = "#000000";
     $.colour.fill = "#ff0000";
@@ -347,9 +348,11 @@ function enemyFiring(){
 
 //create arrow
 function createArrow(){
+    //temp speed for development
+    let tempspeed = 10;
     const arrow = $.makeBoxCollider(firstEnemy.collider.x+20,firstEnemy.collider.y,30,10);
     arrow.fill = "#0009bd";
-    arrow.speed = 3;
+    arrow.speed = tempspeed;
     arrow.direction = 90;
     arrow.friction = 0;
     arrow.damage = 30;
