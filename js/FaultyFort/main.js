@@ -1,4 +1,7 @@
 import { $ } from "../../lib/Pen.js";
+import Enemy from "./Classes/Enemy.js";
+import Fort from "./Classes/Fort.js";
+import Friendly from "./Classes/Friendly.js";
 
 $.use(update);
 
@@ -6,10 +9,8 @@ $.use(update);
 
 let fort_icon = $.loadImage(0,0,"../images/Fort_Icon.jpg");
 
-//fort square
-const square = $.makeBoxCollider($.w - 20, $.h/2, 100, 100);
-//square.fill = "#fcf403";
-square.asset = fort_icon;
+//create the fort
+const fort = new Fort($.w - 20, $.h/2, 100, 100, 500, 0, fort_icon);
 
 //set canvas dimensions
 $.w = 1470;
@@ -42,9 +43,15 @@ baseTiles.push({x: ($.w/2)+185, y: 520, width: 100, height: 80, minClickX: (($.w
 baseTiles.push({x: ($.w/2)+330, y: 520, width: 100, height: 80, minClickX: (($.w/2)+330)-(100/2), maxClickX: (($.w/2)+330)+(100/2), minClickY: 520-(80/2), maxClickY: 520+(80/2), blank: true, text: "Click me!"})
 baseTiles.push({x: ($.w/2)+475, y: 520, width: 100, height: 80, minClickX: (($.w/2)+475)-(100/2), maxClickX: (($.w/2)+475)+(100/2), minClickY: 520-(80/2), maxClickY: 520+(80/2), blank: true, text: "Click me!"})
 
+const firstEnemy = new Enemy(100, 296, 40, 40, 200, 20, 20, 0, 2);
+const firstFriendly = new Friendly($.w/2 - 20, $.h/2, 40, 40, 200, 20, 20, 0, 2);
+
 //setup the game, only called on frame 0
 function setup(){
     console.log('we HOT!');
+    firstEnemy.makeCollider();
+    fort.makeCollider();
+    firstFriendly.makeCollider();
 }
 
 //main game loop
@@ -53,7 +60,8 @@ function update() {
         setup();
     }
 
-    square.draw();
+    fort.drawCollider();
+    firstFriendly.drawCollider();
 
     $.colour.stroke = "#000000";
     $.colour.fill = "#ff0000";
@@ -93,10 +101,15 @@ function update() {
         userClicked();
     }
 
+    debugStuff();
+
     $.colour.fill = "#f7ee97";
     $.shape.rectangle(($.w/2)+172,24,130,40)
     $.colour.fill = "#6b4801";
     $.text.print(($.w/2)+160,25,`Money: ${currentGold.toString()}G`,100);
+
+    //draw the first enemy
+    firstEnemy.drawCollider();
 }
 
 //draw base tiles
@@ -286,5 +299,17 @@ window.onclick = function(event) {
         if(goldError !== null){
             goldError.remove();
         }
+    }
+}
+
+//for debugging without using debugmode
+function debugStuff(){
+    //for creating a rectangle with the mouse x and y values
+    if($.mouse.leftDown){
+        $.colour.fill = "#ffffff";
+        $.shape.rectangle($.mouse.x, $.mouse.y-30, 140, 60)
+        $.colour.fill = "#000000";
+        $.text.print($.mouse.x,$.mouse.y-40, `mouse x= ${$.mouse.x}`, 150);
+        $.text.print($.mouse.x,$.mouse.y-20, `mouse y= ${$.mouse.y}`, 150);
     }
 }
