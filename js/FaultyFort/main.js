@@ -1,5 +1,4 @@
 import { $ } from "../../lib/Pen.js";
-import EnemyManager from "./Classes/EnemyManager.js";
 import Enemy from "./Classes/Enemy.js";
 import Fort from "./Classes/Fort.js";
 import Friendly from "./Classes/Friendly.js";
