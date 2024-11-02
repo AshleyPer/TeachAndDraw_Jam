@@ -4,6 +4,8 @@ import Enemy from "./Classes/Enemy.js";
 import Fort from "./Classes/Fort.js";
 import Friendly from "./Classes/Friendly.js";
 import Arrow from "./Classes/Arrow.js";
+import EnemyManager from "./Classes/EnemyManager.js";
+import FriendlyManager from "./Classes/FriendlyManager.js";
 
 $.use(update);
 
