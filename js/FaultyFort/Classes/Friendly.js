@@ -21,11 +21,6 @@ export default class Friendly {
         this.collider.static = true;
     }
 
-    //draw the collider (might not be used if the collider is going to be added to a group)
-    drawCollider(){
-        this.collider.draw();
-    }
-
     //draw friendly health bars
     drawHealthBar(){
         if(this.currentHealth > 0){

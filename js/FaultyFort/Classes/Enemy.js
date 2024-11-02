@@ -25,11 +25,6 @@ export default class Enemy {
         this.collider.friction = 0;
     }
 
-    //draw the collider (might not be used if the collider is going to be added to a group)
-    drawCollider(){
-        this.collider.draw();
-    }
-
     //check if a friendly or fort is in attack range
     checkTargetInRange(target){
         if((target.x - this.collider.x) <= this.attackRange && target.exists === true){
