@@ -15,8 +15,15 @@ let fort_icon = $.loadImage(0,0,"../images/Fort_Icon.jpg");
 //create the fort
 const fort = new Fort($.w - 20, $.h/2, 100, 100, 500, 0, fort_icon);
 
-//create new friendly manager
-const friendlyManager = new FriendlyManager();
+//create new friendly manager for top lane
+const friendlyManagerTopLane = new FriendlyManager();
+//create new friendly manager for middle lane
+const friendlyManagerMiddleLane = new FriendlyManager();
+//create new friendly manager for bottom lane
+const friendlyManagerBottomLane = new FriendlyManager();
+
+const friendlyManagers = [];
+friendlyManagers.push(friendlyManagerTopLane,friendlyManagerMiddleLane,friendlyManagerBottomLane);
 
 //create new enemy manager for top lane
 const enemyManagerTopLane = new EnemyManager();
@@ -69,9 +76,9 @@ function setup(){
 
     fort.makeCollider();
 
-    friendlyManager.addFriendly(new Friendly($.w/2 - 10, $.h/2 - 95, 40, 40, 200, 20, 20, 0, 2));
-    friendlyManager.addFriendly(new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2));
-    friendlyManager.addFriendly(new Friendly($.w/2 - 10, $.h/2 + 95, 40, 40, 200, 20, 20, 0, 2));
+    friendlyManagerTopLane.addFriendly(new Friendly($.w/2 - 10, $.h/2 - 95, 40, 40, 200, 20, 20, 0, 2));
+    friendlyManagerMiddleLane.addFriendly(new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2));
+    friendlyManagerBottomLane.addFriendly(new Friendly($.w/2 - 10, $.h/2 + 95, 40, 40, 200, 20, 20, 0, 2));
 
     enemyManagerTopLane.addEnemy(new Enemy(360, 60, 40, 40, 200, 20, 200, 0, enemySpeed, 112));
     enemyManagerMiddleLane.addEnemy(new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90));
@@ -86,7 +93,10 @@ function update() {
 
     fort.drawCollider();
 
-    friendlyManager.drawFriendlies();
+    friendlyManagerTopLane.drawFriendlies();
+    friendlyManagerMiddleLane.drawFriendlies();
+    friendlyManagerBottomLane.drawFriendlies();
+
     enemyManagerTopLane.drawEnemies();
     enemyManagerMiddleLane.drawEnemies();
     enemyManagerBottomLane.drawEnemies();
@@ -112,16 +122,21 @@ function update() {
 
     enemyStuff();
     
+
+
     //loop through the enemy firing group and check if an arrow collides with a friendly
     for (let arrow of enemyFiringGroup) {
-        for (let friendly of friendlyManager.friendlyGroup) {
-            if (arrow.collides(friendly.collider)) {
-                console.log("bullet collided with friendly?")
-                playerStuffHit(friendly, arrow);
+        for(let friendlyManager of friendlyManagers){
+            for (let friendly of friendlyManager.friendlyGroup) {
+                if (arrow.collides(friendly.collider)) {
+                    console.log("bullet collided with friendly?")
+                    playerStuffHit(friendly, arrow);
+                }
             }
         }
     }
 }
+
 
 //draw base tiles
 function drawTiles(){
@@ -344,14 +359,14 @@ function playerStuffHit(playerStuff, arrow){
 }
 
 function enemyStuff(){
-    for (let friendly of friendlyManager.friendlyGroup) {
+    /*for (let friendly of friendlyManager.friendlyGroup) {
         if(friendly.collider.exists !== false){
             firstEnemy.checkTargetInRange(friendly.collider);
         }else{
             firstEnemy.collider.speed = firstEnemy.speed;
             firstEnemy.shooting = false;
         }
-    }
+    }*/
     
     if(firstEnemy.shooting === true){
         enemyFiring();
