@@ -1,10 +1,4 @@
-import FriendlyManager from "./FriendlyManager";
-
 export default class EnemyManager {
-    /**
-     * 
-     * @param {Array[FriendlyManager]} friendlyGroups 
-     */
     constructor(friendlyGroups){
         this.friendlyGroup = friendlyGroups;
         this.enemyGroup = $.makeGroup();
