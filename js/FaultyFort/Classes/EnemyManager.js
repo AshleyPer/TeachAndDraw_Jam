@@ -1,6 +1,6 @@
 export default class EnemyManager {
     constructor(friendlyGroups){
-        this.friendlyGroup = friendlyGroups;
+        this.friendlyGroups = friendlyGroups;
         this.enemyGroup = $.makeGroup();
     }
 
@@ -19,13 +19,17 @@ export default class EnemyManager {
     }
 
     checkTargetsInRange(){
-        for (let friendlyGroup in this.friendlyGroups)
-            for (let friendly of friendlyGroup) {
+        for (let friendlyGroup of this.friendlyGroups){
+            for (let friendly of friendlyGroup.friendlyGroup) {
                 if(friendly.collider.exists !== false){
-                    for (let enemy in this.enemyGroup){
+                    for (let enemy of this.enemyGroup){
                         enemy.checkTargetInRange(friendly.collider);
+                        if(enemy.shooting === true){
+                            //enemyFiring();
+                        }
                     }
                 }
             }
+        }
     }
 }
