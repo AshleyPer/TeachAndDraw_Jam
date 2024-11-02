@@ -33,10 +33,7 @@ export default class Fort {
             let scaledWidth = (this.currentHealth/this.maxHealth) * 450;
             //current health
             $.colour.fill = "#2bff00";
-            $.shape.rectangle((($.w/2)+330) - (450-scaledWidth)/2, 
-            55, 
-            scaledWidth, 
-            8)
+            $.shape.rectangle((($.w/2)+330) - (450-scaledWidth)/2, 55, scaledWidth, 8)
         }
     }
     /*

@@ -17,9 +17,6 @@ export default class Friendly {
         this.collider = $.makeBoxCollider(this.x,this.y,this.width,this.height);
         this.collider.fill = "#00ff37";
         this.collider.static = true;
-        /*this.collider.speed = this.speed;
-        this.collider.direction = 90;
-        this.collider.friction = 0;*/
     }
 
     //draw the collider (might not be used if the collider is going to be added to a group)
