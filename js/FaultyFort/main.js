@@ -25,13 +25,17 @@ const friendlyManagerBottomLane = new FriendlyManager();
 const friendlyManagers = [];
 friendlyManagers.push(friendlyManagerTopLane,friendlyManagerMiddleLane,friendlyManagerBottomLane);
 
+const enemyMangers = [];
+
 //create new enemy manager for top lane
 const enemyManagerTopLane = new EnemyManager();
 //create new enemy manager for middle lane
 const enemyManagerMiddleLane = new EnemyManager();
 //create new enemy manager for bottom lane
 const enemyManagerBottomLane = new EnemyManager();
-
+enemyMangers.push(enemyManagerTopLane);
+enemyMangers.push(enemyManagerMiddleLane);
+enemyMangers.push(enemyManagerBottomLane);
 //set canvas dimensions
 $.w = 1470;
 $.h = 600;
@@ -367,6 +371,12 @@ function enemyStuff(){
             firstEnemy.shooting = false;
         }
     }*/
+
+    for (let enemeyManger of enemyMangers){
+        //console.log(enemeyManger)
+        enemeyManger.checkTargetsInRange()
+    }
+    
     
     if(firstEnemy.shooting === true){
         enemyFiring();
