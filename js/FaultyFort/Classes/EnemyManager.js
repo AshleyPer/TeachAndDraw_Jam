@@ -1,5 +1,12 @@
+import FriendlyManager from "./FriendlyManager";
+
 export default class EnemyManager {
-    constructor(){
+    /**
+     * 
+     * @param {Array[FriendlyManager]} friendlyGroups 
+     */
+    constructor(friendlyGroups){
+        this.friendlyGroup = friendlyGroups;
         this.enemyGroup = $.makeGroup();
     }
 
@@ -15,5 +22,16 @@ export default class EnemyManager {
             //no health bars on the enemy yet
             //enemy.drawHealthBar();
         }
+    }
+
+    checkTargetsInRange(){
+        for (let friendlyGroup in this.friendlyGroups)
+            for (let friendly of friendlyGroup) {
+                if(friendly.collider.exists !== false){
+                    for (let enemy in this.enemyGroup){
+                        enemy.checkTargetInRange(friendly.collider);
+                    }
+                }
+            }
     }
 }
