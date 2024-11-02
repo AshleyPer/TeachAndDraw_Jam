@@ -37,7 +37,10 @@ export default class EnemyManager {
     enemyFiring(enemy){
         if(this.enemyFiringGroup.length === 0){
             //need to cull the arrow after a certain amount of time
-            this.enemyFiringGroup.push(this.createArrow(enemy));
+            let arrow = this.createArrow(enemy)
+            arrow.lifespan = 1000;
+            this.enemyFiringGroup.push(arrow);
+
         }
     }
 
