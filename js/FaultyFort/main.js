@@ -72,7 +72,7 @@ let enemySpeed = 10;
 
 const firstEnemy = new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90);
 
-const enemyFiringGroup = $.makeGroup();
+//const enemyFiringGroup = $.makeGroup();
 
 //setup the game, only called on frame 0
 function setup(){
@@ -122,23 +122,17 @@ function update() {
     $.colour.fill = "#6b4801";
     $.text.print(($.w/2)+160,25,`Money: ${currentGold.toString()}G`,100);
 
-    enemyFiringGroup.draw();
+    this.enemeyManger
+    for (let enemeyManger of enemyMangers){
+        enemeyManger.draw()
+    }
+    //enemyFiringGroup.draw();
 
     enemyStuff();
     
 
 
-    //loop through the enemy firing group and check if an arrow collides with a friendly
-    for (let arrow of enemyFiringGroup) {
-        for(let friendlyManager of friendlyManagers){
-            for (let friendly of friendlyManager.friendlyGroup) {
-                if (arrow.collides(friendly.collider)) {
-                    console.log("bullet collided with friendly?")
-                    playerStuffHit(friendly, arrow);
-                }
-            }
-        }
-    }
+
 }
 
 
