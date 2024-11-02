@@ -55,7 +55,7 @@ export default class EnemyManager {
         const arrow = $.makeBoxCollider(enemy.collider.x+20,enemy.collider.y,30,10);
         arrow.fill = "#0009bd";
         arrow.speed = tempspeed;
-        arrow.direction = 90;
+        arrow.direction = enemy.direction;
         
         arrow.friction = 0;
         arrow.damage = 30;

@@ -118,7 +118,7 @@ function update() {
     debugStuff();
 
     $.colour.fill = "#f7ee97";
-    $.shape.rectangle(($.w/2)+172,24,130,40)
+    $.shape.rectangle(($.w/2)+170,24,130,40)
     $.colour.fill = "#6b4801";
     $.text.print(($.w/2)+160,25,`Money: ${currentGold.toString()}G`,100);
 
@@ -130,7 +130,7 @@ function update() {
 
     enemyStuff();
     
-
+    spawnFriendlyButtons();
 
 
 }
@@ -423,4 +423,83 @@ function drawLanesAndSpawnPoints(){
     $.shape.line(300,520,740,350)
     $.shape.line(300,600,765,415) //do this
     $.shape.arc(740,350, 100,100, 90,160)
+}
+
+//add the "buttons" to spawn the friendlies in each lane
+function spawnFriendlyButtons(){
+    spawnFriendlyButtonsTop();
+    spawnFriendlyButtonsMiddle();
+    spawnFriendlyButtonsBottom();
+}
+
+//add the "buttons" to spawn the friendlies in top lane
+function spawnFriendlyButtonsTop(){
+    //Light unit square
+    $.colour.stroke = "#adadad";
+    $.colour.fill = "#adadad";
+    $.shape.rectangle(($.w/2) + 30,($.h/2)-145,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) + 30,($.h/2)-143,`L`,20);
+
+    //Archer unit square
+    $.colour.stroke = "#876b4c";
+    $.colour.fill = "#876b4c";
+    $.shape.rectangle(($.w/2) + 55,($.h/2)-145,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) + 55,($.h/2)-143,'A',20);
+
+    //Archer unit square
+    $.colour.stroke = "#ff8600";
+    $.colour.fill = "#ff8600";
+    $.shape.rectangle(($.w/2) + 80,($.h/2)-145,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) + 80,($.h/2)-143,'H',20);
+}
+
+//add the "buttons" to spawn the friendlies in middle lane
+function spawnFriendlyButtonsMiddle(){
+    //Light unit square
+    $.colour.stroke = "#adadad";
+    $.colour.fill = "#adadad";
+    $.shape.rectangle(($.w/2) - 110,($.h/2)-55,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) - 110,($.h/2)-53,`L`,20);
+
+    //Archer unit square
+    $.colour.stroke = "#876b4c";
+    $.colour.fill = "#876b4c";
+    $.shape.rectangle(($.w/2) - 85,($.h/2)-55,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) - 85,($.h/2)-53,'A',20);
+
+    //Archer unit square
+    $.colour.stroke = "#ff8600";
+    $.colour.fill = "#ff8600";
+    $.shape.rectangle(($.w/2) - 60,($.h/2)-55,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) - 60,($.h/2)-53,'H',20);
+}
+
+//add the "buttons" to spawn the friendlies in bottom lane
+function spawnFriendlyButtonsBottom(){
+    //Light unit square
+    $.colour.stroke = "#adadad";
+    $.colour.fill = "#adadad";
+    $.shape.rectangle(($.w/2) + 30,($.h)-165,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) + 30,($.h)-163,`L`,20);
+
+    //Archer unit square
+    $.colour.stroke = "#876b4c";
+    $.colour.fill = "#876b4c";
+    $.shape.rectangle(($.w/2) + 55,($.h)-165,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) + 55,($.h)-163,'A',20);
+
+    //Archer unit square
+    $.colour.stroke = "#ff8600";
+    $.colour.fill = "#ff8600";
+    $.shape.rectangle(($.w/2) + 80,($.h)-165,20,20)
+    $.colour.fill = "#000000";
+    $.text.print(($.w/2) + 80,($.h)-163,'H',20);
 }
