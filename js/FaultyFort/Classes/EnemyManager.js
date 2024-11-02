@@ -19,8 +19,8 @@ export default class EnemyManager {
             //enemy.drawHealthBar();
         }
     }
-    
-    draw(){
+
+    drawProjectiles(){
         this.enemyFiringGroup.draw()
 
         //loop through the enemy firing group and check if an arrow collides with a friendly
@@ -64,6 +64,9 @@ export default class EnemyManager {
         return arrow;
     }
 
+    //TODO: fix the movement mentioned in the below 2 comments
+    //the current logic to make the enemy continue moving if their target dies, is flawed
+    //it means if any enemy kills a target, then all the other enemies will continue moving
     checkTargetsInRange(){
         for (let friendlyGroup of this.friendlyGroups){
             for (let friendly of friendlyGroup.friendlyGroup) {
