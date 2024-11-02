@@ -1,4 +1,5 @@
 import { $ } from "../../lib/Pen.js";
+import EnemyManager from "./Classes/EnemyManager.js";
 import Enemy from "./Classes/Enemy.js";
 import Fort from "./Classes/Fort.js";
 import Friendly from "./Classes/Friendly.js";
@@ -48,7 +49,7 @@ baseTiles.push({x: ($.w/2)+475, y: 520, width: 100, height: 80, minClickX: (($.w
 let enemySpeed = 10;
 const firstEnemy = new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed);
 
-const firstFriendly = new Friendly($.w/2 - 20, $.h/2, 40, 40, 200, 20, 20, 0, 2);
+const firstFriendly = new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2);
 
 const enemyFiringGroup = $.makeGroup();
 
@@ -115,15 +116,7 @@ function update() {
     $.colour.fill = "#6b4801";
     $.text.print(($.w/2)+160,25,`Money: ${currentGold.toString()}G`,100);
 
-    //draw the first enemy
-    firstEnemy.drawCollider();
-
-    firstEnemy.checkTargetInRange(fort.collider);
-    //firstEnemy.checkTargetInRange(firstFriendly.collider);
-
-    if(firstEnemy.shooting === true){
-        enemyFiring();
-    }
+    singleEnemy();
 
     enemyFiringGroup.draw();
 
@@ -131,14 +124,15 @@ function update() {
     for (let arrow of enemyFiringGroup) {
         if (arrow.collides(firstFriendly.collider)) {
             console.log("bullet collided with friendly?")
-            friendlyHit(firstFriendly, arrow);
+            playerStuffHit(firstFriendly, arrow);
         }
         if (arrow.collides(fort.collider)) {
             console.log("bullet collided with fort?")
-            fortHit(fort, arrow);
+            playerStuffHit(fort, arrow);
         }
     }
     
+
 }
 
 //draw base tiles
@@ -357,24 +351,46 @@ function enemyFiring(){
 //create arrow
 function createArrow(){
     //temp speed for development
-    let tempspeed = 10;
+    let tempspeed = 20;
     const arrow = $.makeBoxCollider(firstEnemy.collider.x+20,firstEnemy.collider.y,30,10);
     arrow.fill = "#0009bd";
     arrow.speed = tempspeed;
     arrow.direction = 90;
+    
     arrow.friction = 0;
     arrow.damage = 30;
     return arrow;
 }
 
-//friendly hit
-function friendlyHit(friendly, arrow){
-    friendly.takeDamage(arrow.damage);
+//player stuff hit
+function playerStuffHit(playerStuff, arrow){
+    playerStuff.takeDamage(arrow.damage);
     arrow.remove();
 }
 
-//friendly hit
-function fortHit(fort, arrow){
-    fort.takeDamage(arrow.damage);
-    arrow.remove();
+
+
+//temporary function to deal with the single enemy
+function singleEnemy(){
+    //draw the first enemy
+    firstEnemy.drawCollider();
+
+    //this if will be temporarily here, to allow the enemy to begin firing at a single friendly, and move again when it is killed
+    //this will need to be a loop in the future, when there isn't just one friendly
+    if(firstFriendly.collider.exists !== false){
+        firstEnemy.checkTargetInRange(firstFriendly.collider);
+    }else{
+        firstEnemy.collider.speed = firstEnemy.speed;
+        firstEnemy.shooting = false;
+    }
+
+    if(firstEnemy.shooting === true){
+        enemyFiring();
+    }
+
+    //suicide bomb
+    if (firstEnemy.collider.collides(fort.collider)) {
+        fort.takeDamage(firstEnemy.damage);
+        firstEnemy.collider.remove();
+    }
 }

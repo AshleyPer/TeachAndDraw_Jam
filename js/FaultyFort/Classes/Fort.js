@@ -14,6 +14,7 @@ export default class Fort {
     makeCollider(){
         this.collider = $.makeBoxCollider(this.x,this.y,this.width,this.height);
         this.collider.asset = this.icon;
+        this.collider.asset.scale = 200;
         this.collider.static = true;
     }
 
@@ -29,9 +30,13 @@ export default class Fort {
             $.colour.fill = "#ff2f00";
             $.shape.rectangle(($.w/2)+330, 55, 450, 8)
 
+            let scaledWidth = (this.currentHealth/this.maxHealth) * 450;
             //current health
             $.colour.fill = "#2bff00";
-            $.shape.rectangle(($.w/2)+330 - (this.maxHealth-this.currentHealth)/2, 55, (this.currentHealth/this.maxHealth) * 450, 8)
+            $.shape.rectangle((($.w/2)+330) - (450-scaledWidth)/2, 
+            55, 
+            scaledWidth, 
+            8)
         }
     }
     /*
