@@ -18,6 +18,9 @@ const fort = new Fort($.w - 20, $.h/2, 100, 100, 500, 0, fort_icon);
 //create new friendly manager
 const friendlyManager = new FriendlyManager();
 
+//create new enemy manager for middle lane
+const enemyManagerMiddleLane = new EnemyManager();
+
 //set canvas dimensions
 $.w = 1470;
 $.h = 600;
@@ -53,19 +56,19 @@ baseTiles.push({x: ($.w/2)+475, y: 520, width: 100, height: 80, minClickX: (($.w
 let enemySpeed = 10;
 const firstEnemy = new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed);
 
-//const firstFriendly = new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2);
-
 const enemyFiringGroup = $.makeGroup();
 
 //setup the game, only called on frame 0
 function setup(){
     console.log('we HOT!');
-    firstEnemy.makeCollider();
+
     fort.makeCollider();
 
     friendlyManager.addFriendly(new Friendly($.w/2 - 10, $.h/2 - 95, 40, 40, 200, 20, 20, 0, 2));
     friendlyManager.addFriendly(new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2));
     friendlyManager.addFriendly(new Friendly($.w/2 - 10, $.h/2 + 95, 40, 40, 200, 20, 20, 0, 2));
+
+    enemyManagerMiddleLane.addEnemy(new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed));
 }
 
 //main game loop
@@ -77,7 +80,8 @@ function update() {
     fort.drawCollider();
 
     friendlyManager.drawFriendlies();
-    
+    enemyManagerMiddleLane.drawEnemies();
+
     drawLanesAndSpawnPoints();
 
     //draw the base
@@ -331,11 +335,6 @@ function playerStuffHit(playerStuff, arrow){
 }
 
 function enemyStuff(){
-    //draw the first enemy (temporary, will become a group after)
-    firstEnemy.drawCollider();
-
-    friendlyManager;
-
     for (let friendly of friendlyManager.friendlyGroup) {
         if(friendly.collider.exists !== false){
             firstEnemy.checkTargetInRange(friendly.collider);
@@ -349,10 +348,12 @@ function enemyStuff(){
         enemyFiring();
     }
 
-    //suicide bomb
-    if (firstEnemy.collider.collides(fort.collider)) {
-        fort.takeDamage(firstEnemy.damage);
-        firstEnemy.collider.remove();
+    //enemy suicide bomb the fort
+    for (let enemy of enemyManagerMiddleLane.enemyGroup) {
+        if (enemy.collider.collides(fort.collider)) {
+            fort.takeDamage(enemy.damage);
+            enemy.collider.remove();
+        }
     }
 }
 
