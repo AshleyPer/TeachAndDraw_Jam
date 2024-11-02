@@ -18,8 +18,12 @@ const fort = new Fort($.w - 20, $.h/2, 100, 100, 500, 0, fort_icon);
 //create new friendly manager
 const friendlyManager = new FriendlyManager();
 
+//create new enemy manager for top lane
+const enemyManagerTopLane = new EnemyManager();
 //create new enemy manager for middle lane
 const enemyManagerMiddleLane = new EnemyManager();
+//create new enemy manager for bottom lane
+const enemyManagerBottomLane = new EnemyManager();
 
 //set canvas dimensions
 $.w = 1470;
@@ -54,7 +58,8 @@ baseTiles.push({x: ($.w/2)+475, y: 520, width: 100, height: 80, minClickX: (($.w
 
 //temporarily setting speed high, for development purposes
 let enemySpeed = 10;
-const firstEnemy = new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed);
+
+const firstEnemy = new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90);
 
 const enemyFiringGroup = $.makeGroup();
 
@@ -68,7 +73,9 @@ function setup(){
     friendlyManager.addFriendly(new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2));
     friendlyManager.addFriendly(new Friendly($.w/2 - 10, $.h/2 + 95, 40, 40, 200, 20, 20, 0, 2));
 
-    enemyManagerMiddleLane.addEnemy(new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed));
+    enemyManagerTopLane.addEnemy(new Enemy(360, 60, 40, 40, 200, 20, 200, 0, enemySpeed, 112));
+    enemyManagerMiddleLane.addEnemy(new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90));
+    enemyManagerBottomLane.addEnemy(new Enemy(360, $.h - 60, 40, 40, 200, 20, 200, 0, enemySpeed, 68));
 }
 
 //main game loop
@@ -80,7 +87,9 @@ function update() {
     fort.drawCollider();
 
     friendlyManager.drawFriendlies();
+    enemyManagerTopLane.drawEnemies();
     enemyManagerMiddleLane.drawEnemies();
+    enemyManagerBottomLane.drawEnemies();
 
     drawLanesAndSpawnPoints();
 

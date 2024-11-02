@@ -1,5 +1,5 @@
 export default class Enemy {
-    constructor(x,y,width,height,maxHealth,damage,attackRange,resistance,speed){
+    constructor(x,y,width,height,maxHealth,damage,attackRange,resistance,speed,direction){
         this.x = x;
         this.y = y;
         this.width = width;
@@ -9,6 +9,7 @@ export default class Enemy {
         this.attackRange = attackRange;
         this.resistance = resistance;
         this.speed = speed;
+        this.direction = direction;
         this.currentHealth = maxHealth;
         this.shooting = false;
         
@@ -20,7 +21,7 @@ export default class Enemy {
         this.collider = $.makeBoxCollider(this.x,this.y,this.width,this.height);
         this.collider.fill = "#ba1130";
         this.collider.speed = this.speed;
-        this.collider.direction = 90;
+        this.collider.direction = this.direction;
         this.collider.friction = 0;
     }
 
