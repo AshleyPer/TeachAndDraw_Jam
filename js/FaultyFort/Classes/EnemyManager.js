@@ -1,8 +1,9 @@
 export default class EnemyManager {
-    constructor(friendlyGroups){
+    constructor(friendlyGroups, fort){
         this.friendlyGroups = friendlyGroups;
         this.enemyGroup = $.makeGroup();
         this.enemyFiringGroup = $.makeGroup();
+        this.fort = fort;
     }
 
     //add the enemy to the enemy group
@@ -18,10 +19,11 @@ export default class EnemyManager {
             //enemy.drawHealthBar();
         }
     }
+    
     draw(){
         this.enemyFiringGroup.draw()
 
-            //loop through the enemy firing group and check if an arrow collides with a friendly
+        //loop through the enemy firing group and check if an arrow collides with a friendly
         for (let arrow of this.enemyFiringGroup) {
             for(let friendlyGroup of this.friendlyGroups){
                 for (let friendly of friendlyGroup.friendlyGroup) {
@@ -72,7 +74,22 @@ export default class EnemyManager {
                             this.enemyFiring(enemy);
                         }
                     }
+                }else{
+                    for (let enemy of this.enemyGroup){
+                        enemy.collider.speed = enemy.speed;
+                        enemy.shooting = false;
+                        
+                    }
                 }
+            }
+        }
+    }
+
+    diveBombFort(){
+        for (let enemy of this.enemyGroup){
+            if (enemy.collider.collides(this.fort.collider)) {
+                this.fort.takeDamage(enemy.damage);
+                enemy.collider.remove();
             }
         }
     }

@@ -28,14 +28,15 @@ friendlyManagers.push(friendlyManagerTopLane,friendlyManagerMiddleLane,friendlyM
 const enemyMangers = [];
 
 //create new enemy manager for top lane
-const enemyManagerTopLane = new EnemyManager(friendlyManagers);
+const enemyManagerTopLane = new EnemyManager(friendlyManagers,fort);
 //create new enemy manager for middle lane
-const enemyManagerMiddleLane = new EnemyManager(friendlyManagers);
+const enemyManagerMiddleLane = new EnemyManager(friendlyManagers,fort);
 //create new enemy manager for bottom lane
-const enemyManagerBottomLane = new EnemyManager(friendlyManagers);
+const enemyManagerBottomLane = new EnemyManager(friendlyManagers,fort);
 enemyMangers.push(enemyManagerTopLane);
 enemyMangers.push(enemyManagerMiddleLane);
 enemyMangers.push(enemyManagerBottomLane);
+
 //set canvas dimensions
 $.w = 1470;
 $.h = 600;
@@ -69,10 +70,6 @@ baseTiles.push({x: ($.w/2)+475, y: 520, width: 100, height: 80, minClickX: (($.w
 
 //temporarily setting speed high, for development purposes
 let enemySpeed = 10;
-
-const firstEnemy = new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90);
-
-//const enemyFiringGroup = $.makeGroup();
 
 //setup the game, only called on frame 0
 function setup(){
@@ -179,6 +176,9 @@ function userClicked(){
             popup.style.display = "block";
         }
     }
+
+    //check if user clicked the unit creator buttons
+
 }
 
 //add event handlers to the buttons for the base tile popup
@@ -328,64 +328,11 @@ function debugStuff(){
     }
 }
 
-//enemy firing
-function enemyFiring(){
-    if(enemyFiringGroup.length === 0){
-        //need to cull the arrow after a certain amount of time
-        enemyFiringGroup.push(createArrow());
-    }
-}
-
-//create arrow
-function createArrow(){
-    //temp speed for development
-    let tempspeed = 20;
-    const arrow = $.makeBoxCollider(firstEnemy.collider.x+20,firstEnemy.collider.y,30,10);
-    arrow.fill = "#0009bd";
-    arrow.speed = tempspeed;
-    arrow.direction = 90;
-    
-    arrow.friction = 0;
-    arrow.damage = 30;
-    return arrow;
-}
-
-//player stuff hit
-function playerStuffHit(playerStuff, arrow){
-    playerStuff.takeDamage(arrow.damage);
-    arrow.remove();
-}
-
 function enemyStuff(){
-    /*for (let friendly of friendlyManager.friendlyGroup) {
-        if(friendly.collider.exists !== false){
-            firstEnemy.checkTargetInRange(friendly.collider);
-        }else{
-            firstEnemy.collider.speed = firstEnemy.speed;
-            firstEnemy.shooting = false;
-        }
-    }*/
-
     for (let enemeyManger of enemyMangers){
         //console.log(enemeyManger)
-        enemeyManger.checkTargetsInRange()
-    }
-
-    
-    
-    /*
-    
-    if(firstEnemy.shooting === true){
-        enemyFiring();
-    }
-        */
-
-    //enemy suicide bomb the fort
-    for (let enemy of enemyManagerMiddleLane.enemyGroup) {
-        if (enemy.collider.collides(fort.collider)) {
-            fort.takeDamage(enemy.damage);
-            enemy.collider.remove();
-        }
+        enemeyManger.checkTargetsInRange();
+        enemeyManger.diveBombFort();
     }
 }
 
