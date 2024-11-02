@@ -388,6 +388,6 @@ function drawLanesAndSpawnPoints(){
     //bottom lanes
     $.colour.stroke = "#ff0000";
     $.shape.line(300,520,740,350)
-    $.shape.line(300,600,740,430) //do this
+    $.shape.line(300,600,765,415) //do this
     $.shape.arc(740,350, 100,100, 90,160)
 }
