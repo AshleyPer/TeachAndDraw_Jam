@@ -28,11 +28,11 @@ friendlyManagers.push(friendlyManagerTopLane,friendlyManagerMiddleLane,friendlyM
 const enemyMangers = [];
 
 //create new enemy manager for top lane
-const enemyManagerTopLane = new EnemyManager();
+const enemyManagerTopLane = new EnemyManager(friendlyManagers);
 //create new enemy manager for middle lane
-const enemyManagerMiddleLane = new EnemyManager();
+const enemyManagerMiddleLane = new EnemyManager(friendlyManagers);
 //create new enemy manager for bottom lane
-const enemyManagerBottomLane = new EnemyManager();
+const enemyManagerBottomLane = new EnemyManager(friendlyManagers);
 enemyMangers.push(enemyManagerTopLane);
 enemyMangers.push(enemyManagerMiddleLane);
 enemyMangers.push(enemyManagerBottomLane);
@@ -376,11 +376,15 @@ function enemyStuff(){
         //console.log(enemeyManger)
         enemeyManger.checkTargetsInRange()
     }
+
     
+    
+    /*
     
     if(firstEnemy.shooting === true){
         enemyFiring();
     }
+        */
 
     //enemy suicide bomb the fort
     for (let enemy of enemyManagerMiddleLane.enemyGroup) {
