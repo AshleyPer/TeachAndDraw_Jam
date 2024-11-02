@@ -15,6 +15,9 @@ let fort_icon = $.loadImage(0,0,"../images/Fort_Icon.jpg");
 //create the fort
 const fort = new Fort($.w - 20, $.h/2, 100, 100, 500, 0, fort_icon);
 
+//create new friendly manager
+const friendlyManager = new FriendlyManager();
+
 //set canvas dimensions
 $.w = 1470;
 $.h = 600;
@@ -50,7 +53,7 @@ baseTiles.push({x: ($.w/2)+475, y: 520, width: 100, height: 80, minClickX: (($.w
 let enemySpeed = 10;
 const firstEnemy = new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed);
 
-const firstFriendly = new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2);
+//const firstFriendly = new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2);
 
 const enemyFiringGroup = $.makeGroup();
 
@@ -59,7 +62,10 @@ function setup(){
     console.log('we HOT!');
     firstEnemy.makeCollider();
     fort.makeCollider();
-    firstFriendly.makeCollider();
+
+    friendlyManager.addFriendly(new Friendly($.w/2 - 10, $.h/2 - 95, 40, 40, 200, 20, 20, 0, 2));
+    friendlyManager.addFriendly(new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2));
+    friendlyManager.addFriendly(new Friendly($.w/2 - 10, $.h/2 + 95, 40, 40, 200, 20, 20, 0, 2));
 }
 
 //main game loop
@@ -69,38 +75,10 @@ function update() {
     }
 
     fort.drawCollider();
-    firstFriendly.drawCollider();
-    firstFriendly.drawHealthBar();
 
-    $.colour.stroke = "#000000";
-    $.colour.fill = "#ff0000";
-
-    //enemy spawn1 top
-    $.shape.oval(300,40,40,40,);
-
-    //enemy spawn2 middle
-    $.shape.oval(40,$.h/2,40,40,);
-
-    //middle 2 lanes
-    $.colour.stroke = "#ff0000";
-    $.shape.line(70,($.h/2)-40,($.w/2)+70,($.h/2)-40)
-    $.shape.line(70,($.h/2)+40,($.w/2)+70,($.h/2)+40)
-
-    $.colour.stroke = "#000000";
+    friendlyManager.drawFriendlies();
     
-    //enemy spawn3 bottom
-    $.shape.oval(300,$.h-40,40,40,);
-    $.colour.stroke = "#DCDCDC";
-    $.colour.fill = "#00000000";
-
-    $.shape.arc(740,250, 100,100, 20,90)
-
-    $.shape.line(300,80,740,250)
-    $.shape.line(320,0,765,185)
-    $.shape.arc(740,350, 100,100, 90,160)
-
-    $.shape.line(300,520,740,350)
-    $.shape.line(320,0,765,185)
+    drawLanesAndSpawnPoints();
 
     //draw the base
     drawBaseStuff();
@@ -117,23 +95,19 @@ function update() {
     $.colour.fill = "#6b4801";
     $.text.print(($.w/2)+160,25,`Money: ${currentGold.toString()}G`,100);
 
-    singleEnemy();
-
     enemyFiringGroup.draw();
 
+    enemyStuff();
+    
     //loop through the enemy firing group and check if an arrow collides with a friendly
     for (let arrow of enemyFiringGroup) {
-        if (arrow.collides(firstFriendly.collider)) {
-            console.log("bullet collided with friendly?")
-            playerStuffHit(firstFriendly, arrow);
-        }
-        if (arrow.collides(fort.collider)) {
-            console.log("bullet collided with fort?")
-            playerStuffHit(fort, arrow);
+        for (let friendly of friendlyManager.friendlyGroup) {
+            if (arrow.collides(friendly.collider)) {
+                console.log("bullet collided with friendly?")
+                playerStuffHit(friendly, arrow);
+            }
         }
     }
-    
-
 }
 
 //draw base tiles
@@ -157,17 +131,6 @@ function drawBaseStuff(){
     $.colour.fill = "#ffffff";
     $.shape.rectangle(($.w/2)+330,320,450,500)
 
-    /*
-        //base healthbar red
-        $.colour.stroke = "#000000";
-        $.colour.fill = "#ff1e00";
-        $.shape.rectangle (($.w/2)+330,55,450,18)
-
-        //base healthbar green
-        $.colour.stroke = "#000000";
-        $.colour.fill = "#00ff1a";
-        $.shape.rectangle (($.w/2)+305,55,400,18)
-    */
     fort.drawHealthBar();
 
     //base tiles
@@ -175,8 +138,6 @@ function drawBaseStuff(){
     $.colour.fill = "#ffffff";
 
     drawTiles();
-
-
 }
 
 //handle if a user clicked
@@ -343,8 +304,8 @@ function debugStuff(){
 
 //enemy firing
 function enemyFiring(){
-    //x,y,width,height,damage,speed
     if(enemyFiringGroup.length === 0){
+        //need to cull the arrow after a certain amount of time
         enemyFiringGroup.push(createArrow());
     }
 }
@@ -369,22 +330,21 @@ function playerStuffHit(playerStuff, arrow){
     arrow.remove();
 }
 
-
-
-//temporary function to deal with the single enemy
-function singleEnemy(){
-    //draw the first enemy
+function enemyStuff(){
+    //draw the first enemy (temporary, will become a group after)
     firstEnemy.drawCollider();
 
-    //this if will be temporarily here, to allow the enemy to begin firing at a single friendly, and move again when it is killed
-    //this will need to be a loop in the future, when there isn't just one friendly
-    if(firstFriendly.collider.exists !== false){
-        firstEnemy.checkTargetInRange(firstFriendly.collider);
-    }else{
-        firstEnemy.collider.speed = firstEnemy.speed;
-        firstEnemy.shooting = false;
-    }
+    friendlyManager;
 
+    for (let friendly of friendlyManager.friendlyGroup) {
+        if(friendly.collider.exists !== false){
+            firstEnemy.checkTargetInRange(friendly.collider);
+        }else{
+            firstEnemy.collider.speed = firstEnemy.speed;
+            firstEnemy.shooting = false;
+        }
+    }
+    
     if(firstEnemy.shooting === true){
         enemyFiring();
     }
@@ -394,4 +354,40 @@ function singleEnemy(){
         fort.takeDamage(firstEnemy.damage);
         firstEnemy.collider.remove();
     }
+}
+
+function drawLanesAndSpawnPoints(){
+    //enemy spawn1 top
+    $.colour.stroke = "#000000";
+    $.colour.fill = "#ff0000";
+    $.shape.oval(300,40,40,40,);
+
+    //top lanes
+    $.colour.stroke = "#ff0000";
+    $.colour.fill = "#00000000";
+    $.shape.arc(740,250, 100,100, 20,90)
+    $.shape.line(300,80,740,250)
+    $.shape.line(320,0,765,185)
+    $.colour.fill = "#ff0000";
+
+    //enemy spawn2 middle
+    $.shape.oval(40,$.h/2,40,40,);
+
+    //middle 2 lanes
+    $.colour.stroke = "#ff0000";
+    $.shape.line(70,($.h/2)-40,($.w/2) - 4,($.h/2)-40)
+    $.shape.line(70,($.h/2)+40,($.w/2) - 4,($.h/2)+40)
+
+    $.colour.stroke = "#000000";
+    
+    //enemy spawn3 bottom
+    $.shape.oval(300,$.h-40,40,40,);
+    $.colour.stroke = "#DCDCDC";
+    $.colour.fill = "#00000000";
+
+    //bottom lanes
+    $.colour.stroke = "#ff0000";
+    $.shape.line(300,520,740,350)
+    $.shape.line(300,600,740,430) //do this
+    $.shape.arc(740,350, 100,100, 90,160)
 }

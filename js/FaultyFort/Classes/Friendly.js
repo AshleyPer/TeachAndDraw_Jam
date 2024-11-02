@@ -10,6 +10,8 @@ export default class Friendly {
         this.resistance = resistance;
         this.speed = speed;
         this.currentHealth = maxHealth;
+
+        this.makeCollider();
     }
 
     //make the collider

@@ -11,6 +11,8 @@ export default class Enemy {
         this.speed = speed;
         this.currentHealth = maxHealth;
         this.shooting = false;
+        
+        this.makeCollider();
     }
 
     //make the collider
