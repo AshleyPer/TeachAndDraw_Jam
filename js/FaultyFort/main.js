@@ -6,6 +6,7 @@ import EnemyManager from "./Classes/EnemyManager.js";
 import FriendlyManager from "./Classes/FriendlyManager.js";
 import BaseManager from "./Classes/BaseManager.js";
 import BaseTile from "./Classes/BaseTile.js";
+import UnitAllocator from "./Classes/UnitAllocator.js";
 
 $.use(update);
 
@@ -78,6 +79,19 @@ function setup(){
     baseManager.addBaseTile(new BaseTile(13,($.w/2)+185,520,100,80));
     baseManager.addBaseTile(new BaseTile(14,($.w/2)+330,520,100,80));
     baseManager.addBaseTile(new BaseTile(15,($.w/2)+475,520,100,80));
+
+    //top lane allocators
+    baseManager.addAllocator(new UnitAllocator(1,($.w/2)+30,($.h/2)-145,20,20,($.w/2)+30,($.h/2)-143,'L',20,"Light","top"));
+    baseManager.addAllocator(new UnitAllocator(2,($.w/2)+55,($.h/2)-145,20,20,($.w/2)+55,($.h/2)-143,'A',20,"Archer","top"));
+    baseManager.addAllocator(new UnitAllocator(3,($.w/2)+80,($.h/2)-145,20,20,($.w/2)+80,($.h/2)-143,'H',20,"Heavy","top"));
+    //middle lane allocators
+    baseManager.addAllocator(new UnitAllocator(4,($.w/2)-110,($.h/2)-55,20,20,($.w/2)-110,($.h/2)-53,'L',20,"Light","Middle"));
+    baseManager.addAllocator(new UnitAllocator(5,($.w/2)-85,($.h/2)-55,20,20,($.w/2)-85,($.h/2)-53,'A',20,"Archer","Middle"));
+    baseManager.addAllocator(new UnitAllocator(6,($.w/2)-60,($.h/2)-55,20,20,($.w/2)-60,($.h/2)-53,'H',20,"Heavy","Middle"));
+    //bottom lane allocators
+    baseManager.addAllocator(new UnitAllocator(7,($.w/2)+30,($.h)-165,20,20,($.w/2)+30,($.h)-163,'L',20,"Light","Bottom"));
+    baseManager.addAllocator(new UnitAllocator(8,($.w/2)+55,($.h)-165,20,20,($.w/2)+55,($.h)-163,'A',20,"Archer","Bottom"));
+    baseManager.addAllocator(new UnitAllocator(9,($.w/2)+80,($.h)-165,20,20,($.w/2)+80,($.h)-163,'H',20,"Heavy","Bottom"));
 }
 
 //main game loop
@@ -105,11 +119,8 @@ function update() {
     debugStuff();
 
     enemyStuff();
-    
-    spawnFriendlyButtons();
 
 }
-
 
 function drawBaseStuff(){
     //base
@@ -126,6 +137,7 @@ function drawBaseStuff(){
     baseManager.drawBaseTiles();
     baseManager.drawCurrentGoldSection();
     baseManager.drawStockSection();
+    baseManager.drawAllocators();
 }
 
 //handle if a user clicked
@@ -139,6 +151,11 @@ function userClicked(){
     }
 
     //check if user clicked the unit creator buttons
+    for (let unitAllocator of baseManager.unitAllocatorGroup){
+        
+        unitAllocator.checkIfClicked();
+    }
+
 
 }
 
@@ -253,84 +270,4 @@ function drawLanesAndSpawnPoints(){
     $.shape.line(300,520,740,350)
     $.shape.line(300,600,765,415) //do this
     $.shape.arc(740,350, 100,100, 90,160)
-}
-
-//add the "buttons" to spawn the friendlies in each lane
-function spawnFriendlyButtons(){
-    spawnFriendlyButtonsTop();
-    spawnFriendlyButtonsMiddle();
-    spawnFriendlyButtonsBottom();
-}
-
-//add the "buttons" to spawn the friendlies in top lane
-function spawnFriendlyButtonsTop(){
-    //TODO tie these into the UnitAllocator
-    //Light unit square
-    $.colour.stroke = "#adadad";
-    $.colour.fill = "#adadad";
-    $.shape.rectangle(($.w/2) + 30,($.h/2)-145,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) + 30,($.h/2)-143,`L`,20);
-
-    //Archer unit square
-    $.colour.stroke = "#876b4c";
-    $.colour.fill = "#876b4c";
-    $.shape.rectangle(($.w/2) + 55,($.h/2)-145,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) + 55,($.h/2)-143,'A',20);
-
-    //Archer unit square
-    $.colour.stroke = "#ff8600";
-    $.colour.fill = "#ff8600";
-    $.shape.rectangle(($.w/2) + 80,($.h/2)-145,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) + 80,($.h/2)-143,'H',20);
-}
-
-//add the "buttons" to spawn the friendlies in middle lane
-function spawnFriendlyButtonsMiddle(){
-    //Light unit square
-    $.colour.stroke = "#adadad";
-    $.colour.fill = "#adadad";
-    $.shape.rectangle(($.w/2) - 110,($.h/2)-55,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) - 110,($.h/2)-53,`L`,20);
-
-    //Archer unit square
-    $.colour.stroke = "#876b4c";
-    $.colour.fill = "#876b4c";
-    $.shape.rectangle(($.w/2) - 85,($.h/2)-55,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) - 85,($.h/2)-53,'A',20);
-
-    //Archer unit square
-    $.colour.stroke = "#ff8600";
-    $.colour.fill = "#ff8600";
-    $.shape.rectangle(($.w/2) - 60,($.h/2)-55,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) - 60,($.h/2)-53,'H',20);
-}
-
-//add the "buttons" to spawn the friendlies in bottom lane
-function spawnFriendlyButtonsBottom(){
-    //Light unit square
-    $.colour.stroke = "#adadad";
-    $.colour.fill = "#adadad";
-    $.shape.rectangle(($.w/2) + 30,($.h)-165,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) + 30,($.h)-163,`L`,20);
-
-    //Archer unit square
-    $.colour.stroke = "#876b4c";
-    $.colour.fill = "#876b4c";
-    $.shape.rectangle(($.w/2) + 55,($.h)-165,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) + 55,($.h)-163,'A',20);
-
-    //Archer unit square
-    $.colour.stroke = "#ff8600";
-    $.colour.fill = "#ff8600";
-    $.shape.rectangle(($.w/2) + 80,($.h)-165,20,20)
-    $.colour.fill = "#000000";
-    $.text.print(($.w/2) + 80,($.h)-163,'H',20);
 }

@@ -7,16 +7,6 @@ export default class BaseTile{
         this.width = width;
         this.blank = true;
         this.text = "Click me!";
-        /*{
-        x: ($.w/2)+185, 
-        y: 120, 
-        width: 100, 
-        height: 80, 
-        minClickX: (($.w/2)+185)-(100/2), 
-        maxClickX: (($.w/2)+185)+(100/2), 
-        minClickY: 120-(80/2), 
-        maxClickY: 120+(80/2)
-        */
         this.minClickX = this.x - 100/2;
         this.maxClickX = this.x + 100/2;
         this.minClickY = this.y - 80/2;
