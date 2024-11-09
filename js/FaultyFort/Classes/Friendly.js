@@ -1,5 +1,5 @@
 export default class Friendly {
-    constructor(x,y,width,height,maxHealth,damage,attackRange,resistance,speed,type){
+    constructor(x,y,width,height,maxHealth,damage,attackRange,resistance,speed,type,moveRange){
         this.x = x;
         this.y = y;
         this.width = width;
@@ -7,10 +7,12 @@ export default class Friendly {
         this.maxHealth = maxHealth;
         this.damage = damage;
         this.attackRange = attackRange;
+        this.moveRange = moveRange;
         this.resistance = resistance;
         this.speed = speed;
         this.type = type;
         this.currentHealth = maxHealth;
+        this.lastShot = 0;
         this.makeCollider();
     }
 
@@ -53,6 +55,21 @@ export default class Friendly {
             //friendly is dead...
             this.collider.remove();
             //also need to remove the instance of the class later
+        }
+    }
+
+    justCheckTargetInRange(target){
+        if(Math.abs(target.x - this.collider.x) <= this.attackRange && target.exists === true){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    justCheckTargetInWalkRange(target){
+        if(Math.abs(target.x - this.collider.x) <= this.moveRange && target.exists === true){
+            return true;
+        }else{
+            return false;
         }
     }
 }
