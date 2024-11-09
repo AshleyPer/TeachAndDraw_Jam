@@ -35,11 +35,13 @@ export default class EnemyManager {
     }
 
     enemyFiring(enemy, friendly){
-        if(this.enemyFiringGroup.length === 0){
+        let now = this.secondsSinceEpoch();
+        if(now > enemy.lastShot + 1){
             //need to cull the arrow after a certain amount of time
             let arrow = this.createArrow(enemy,friendly)
             arrow.lifespan = 1000;
             this.enemyFiringGroup.push(arrow);
+            enemy.lastShot = now;
         }
     }
 
@@ -144,5 +146,9 @@ export default class EnemyManager {
                 enemy.collider.remove();
             }
         }
+    }
+
+    secondsSinceEpoch(){
+        return Math.round(Date.now() / 1000);
     }
 }
