@@ -12,6 +12,7 @@ export default class Enemy {
         this.direction = direction;
         this.currentHealth = maxHealth;
         this.shooting = false;
+        this.lastShot = 0;
         
         this.makeCollider();
     }
@@ -40,7 +41,7 @@ export default class Enemy {
     }
 
     justCheckTargetInRange(target){
-        if((target.x - this.collider.x) <= this.attackRange && target.exists === true){
+        if(Math.abs(target.x - this.collider.x) <= this.attackRange && target.exists === true){
             return true;
         }else{
             return false;
