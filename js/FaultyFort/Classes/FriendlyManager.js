@@ -33,7 +33,7 @@ export default class FriendlyManager {
     drawFriendlies(){
         for (let friendly of this.friendlyGroup) {
             friendly.collider.draw();
-            friendly.drawHealthBar();
+            //friendly.drawHealthBar();
         }
     }
 

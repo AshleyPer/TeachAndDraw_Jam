@@ -30,6 +30,7 @@ export default class Friendly {
     }
 
     //draw friendly health bars
+    /*
     drawHealthBar(){
         if(this.currentHealth > 0){
             //max health
@@ -40,7 +41,7 @@ export default class Friendly {
             $.colour.fill = "#2bff00";
             $.shape.rectangle(this.x - (this.maxHealth-this.currentHealth)/10, this.y-15, this.currentHealth/5, 4)
         }
-    }
+    }*/
 
     //check if an enemy is in attack range
     checkTargetInRange(){
