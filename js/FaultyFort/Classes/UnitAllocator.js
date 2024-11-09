@@ -38,6 +38,45 @@ export default class UnitAllocator{
     checkIfClicked(){
         if($.mouse.x >= this.minClickX && $.mouse.y >= this.minClickY && $.mouse.x <= this.maxClickX && $.mouse.y <= this.maxClickY){
             console.log("yes, I am clicked", this.text)
+            //spawn top lane
+            if(this.location === "Top"){
+                //spawn light
+                if(this.type === "Light"){
+                    
+                //spawn archer
+                }else if(this.type === "Archer"){
+                
+                //spawn heavy
+                }else if(this.type === "Heavy"){
+                    
+                }
+
+            //spawn middle lane   
+            }else if(this.location === "Middle"){
+                //spawn light
+                if(this.type === "Light"){
+                    
+                //spawn archer
+                }else if(this.type === "Archer"){
+                
+                //spawn heavy
+                }else if(this.type === "Heavy"){
+                    
+                }
+
+            //spawn bottom lane    
+            }else if(this.location === "Bottom"){
+                //spawn light
+                if(this.type === "Light"){
+                    
+                //spawn archer
+                }else if(this.type === "Archer"){
+                
+                //spawn heavy
+                }else if(this.type === "Heavy"){
+                    
+                }
+            }
         }
     }
 

@@ -81,9 +81,9 @@ function setup(){
     baseManager.addBaseTile(new BaseTile(15,($.w/2)+475,520,100,80));
 
     //top lane allocators
-    baseManager.addAllocator(new UnitAllocator(1,($.w/2)+30,($.h/2)-145,20,20,($.w/2)+30,($.h/2)-143,'L',20,"Light","top"));
-    baseManager.addAllocator(new UnitAllocator(2,($.w/2)+55,($.h/2)-145,20,20,($.w/2)+55,($.h/2)-143,'A',20,"Archer","top"));
-    baseManager.addAllocator(new UnitAllocator(3,($.w/2)+80,($.h/2)-145,20,20,($.w/2)+80,($.h/2)-143,'H',20,"Heavy","top"));
+    baseManager.addAllocator(new UnitAllocator(1,($.w/2)+30,($.h/2)-145,20,20,($.w/2)+30,($.h/2)-143,'L',20,"Light","Top"));
+    baseManager.addAllocator(new UnitAllocator(2,($.w/2)+55,($.h/2)-145,20,20,($.w/2)+55,($.h/2)-143,'A',20,"Archer","Top"));
+    baseManager.addAllocator(new UnitAllocator(3,($.w/2)+80,($.h/2)-145,20,20,($.w/2)+80,($.h/2)-143,'H',20,"Heavy","Top"));
     //middle lane allocators
     baseManager.addAllocator(new UnitAllocator(4,($.w/2)-110,($.h/2)-55,20,20,($.w/2)-110,($.h/2)-53,'L',20,"Light","Middle"));
     baseManager.addAllocator(new UnitAllocator(5,($.w/2)-85,($.h/2)-55,20,20,($.w/2)-85,($.h/2)-53,'A',20,"Archer","Middle"));
