@@ -31,9 +31,19 @@ export default class Enemy {
             this.collider.speed = 0;
             //time to get the enemy to start firing!
             this.shooting = true;
+            return true;
         }else{
             this.collider.speed = this.speed;
             this.shooting = false;
+            return false;
+        }
+    }
+
+    justCheckTargetInRange(target){
+        if((target.x - this.collider.x) <= this.attackRange && target.exists === true){
+            return true;
+        }else{
+            return false;
         }
     }
 }

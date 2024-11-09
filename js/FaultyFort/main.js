@@ -220,7 +220,8 @@ function enemyStuff(){
 
     //check if targets in range, and also allow the enemies to dive bomb the fort
     for (let enemeyManger of enemyMangers){
-        enemeyManger.checkTargetsInRange();
+        //enemeyManger.checkTargetsInRange();
+        enemeyManger.handleEnemyActions()
         enemeyManger.diveBombFort();
     }
 

@@ -35,10 +35,10 @@ export default class EnemyManager {
         }
     }
 
-    enemyFiring(enemy){
+    enemyFiring(enemy, friendly){
         if(this.enemyFiringGroup.length === 0){
             //need to cull the arrow after a certain amount of time
-            let arrow = this.createArrow(enemy)
+            let arrow = this.createArrow(enemy,friendly)
             arrow.lifespan = 1000;
             this.enemyFiringGroup.push(arrow);
 
@@ -50,17 +50,24 @@ export default class EnemyManager {
         arrow.remove();
     }
 
-    createArrow(enemy){
+    createArrow(enemy, friendly){
         //temp speed for development
+        let direction = this.determineArrowDirection(enemy, friendly)
         let tempspeed = 20;
-        const arrow = $.makeBoxCollider(enemy.collider.x+20,enemy.collider.y,30,10);
+        const arrow = $.makeBoxCollider(enemy.collider.x,enemy.collider.y,20,10);
         arrow.fill = "#0009bd";
         arrow.speed = tempspeed;
-        arrow.direction = enemy.direction;
+        arrow.direction = direction - 90; // Minus 90 for the angle offset of TAD
         
         arrow.friction = 0;
         arrow.damage = 30;
         return arrow;
+    }
+
+    determineArrowDirection(enemy, friendly){
+        let radian_angle = Math.atan((enemy.collider.y - friendly.collider.y) / (enemy.collider.x - friendly.collider.x));
+        let degree_angle = (radian_angle) * (180 / Math.PI);
+        return degree_angle - 180;
     }
 
     //TODO: fix the movement mentioned in the below 2 comments
@@ -99,20 +106,38 @@ export default class EnemyManager {
         return false;
     }
 
-    checkClosestEnemy(){
-        //closestEnemy = 
-        for (let friendlyGroup of this.friendlyGroups){
-            for (let friendly of friendlyGroup.friendlyGroup) {
-                if(friendly.collider.exists !== false){
-                    for (let enemy of this.enemyGroup){
-                        if (enemy.checkTargetInRange(friendly.collider)){
-                            return true;
+    checkClosestFriendly(enemy){
+        let closestFriendly = undefined;
+
+        for (let friendly of this.friendlyGroups.friendlyGroup) {
+            if(friendly.collider.exists !== false){
+                    if (enemy.justCheckTargetInRange(friendly.collider)){
+                        if (closestFriendly === undefined){
+                            closestFriendly = friendly;
+                        }else if (this.checkDistance(friendly,enemy) < this.checkDistance(closestFriendly,enemy)){
+                            closestFriendly = friendly;
                         }
+                    }else{
+                        // not in range
                     }
-                }
             }
-        return false;
+            
+        }
+        return closestFriendly;
     }
+
+    handleEnemyActions(){
+        for (let enemy of this.enemyGroup){
+            let nearestFriendly = this.checkClosestFriendly(enemy);
+            if (nearestFriendly){
+                enemy.collider.speed = 0;
+                enemy.shooting = true;
+                this.enemyFiring(enemy, nearestFriendly);
+            }else{
+                enemy.collider.speed = enemy.speed;
+                enemy.shooting = false;
+            }
+        }
     }
 
     checkDistance(t1,t2){
