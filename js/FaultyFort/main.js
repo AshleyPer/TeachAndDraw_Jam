@@ -18,11 +18,11 @@ let fort_icon = $.loadImage(0,0,"../images/Fort_Icon.jpg");
 const fort = new Fort($.w - 20, $.h/2, 100, 100, 500, 0, fort_icon);
 
 //create new friendly manager for top lane
-const friendlyManagerTopLane = new FriendlyManager();
+const friendlyManagerTopLane = new FriendlyManager(706,790,174,242);
 //create new friendly manager for middle lane
-const friendlyManagerMiddleLane = new FriendlyManager();
+const friendlyManagerMiddleLane = new FriendlyManager(600,724,264,335);
 //create new friendly manager for bottom lane
-const friendlyManagerBottomLane = new FriendlyManager();
+const friendlyManagerBottomLane = new FriendlyManager(706,790,355,415);
 
 const friendlyManagers = [];
 friendlyManagers.push(friendlyManagerTopLane,friendlyManagerMiddleLane,friendlyManagerBottomLane);
@@ -55,9 +55,9 @@ function setup(){
 
     fort.makeCollider();
 
-    friendlyManagerTopLane.addFriendly(new Friendly($.w/2 - 10, $.h/2 - 95, 40, 40, 200, 20, 20, 0, 2));
-    friendlyManagerMiddleLane.addFriendly(new Friendly($.w/2 - 50, $.h/2, 40, 40, 200, 20, 20, 0, 2));
-    friendlyManagerBottomLane.addFriendly(new Friendly($.w/2 - 10, $.h/2 + 95, 40, 40, 200, 20, 20, 0, 2));
+    friendlyManagerTopLane.addFriendly(new Friendly(friendlyManagerTopLane.calculateRandomX(), friendlyManagerTopLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Light"));
+    friendlyManagerMiddleLane.addFriendly(new Friendly(friendlyManagerMiddleLane.calculateRandomX(), friendlyManagerMiddleLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Archer"));
+    friendlyManagerBottomLane.addFriendly(new Friendly(friendlyManagerBottomLane.calculateRandomX(), friendlyManagerBottomLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Heavy"));
 
     enemyManagerTopLane.addEnemy(new Enemy(360, 60, 40, 40, 200, 20, 200, 0, enemySpeed, 112));
     enemyManagerMiddleLane.addEnemy(new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90));
@@ -81,17 +81,17 @@ function setup(){
     baseManager.addBaseTile(new BaseTile(15,($.w/2)+475,520,100,80));
 
     //top lane allocators
-    baseManager.addAllocator(new UnitAllocator(1,($.w/2)+30,($.h/2)-145,20,20,($.w/2)+30,($.h/2)-143,'L',20,"Light","Top"));
-    baseManager.addAllocator(new UnitAllocator(2,($.w/2)+55,($.h/2)-145,20,20,($.w/2)+55,($.h/2)-143,'A',20,"Archer","Top"));
-    baseManager.addAllocator(new UnitAllocator(3,($.w/2)+80,($.h/2)-145,20,20,($.w/2)+80,($.h/2)-143,'H',20,"Heavy","Top"));
+    baseManager.addAllocator(new UnitAllocator(1,($.w/2)+30,($.h/2)-145,20,20,($.w/2)+30,($.h/2)-143,'L',20,"Light","Top",friendlyManagerTopLane));
+    baseManager.addAllocator(new UnitAllocator(2,($.w/2)+55,($.h/2)-145,20,20,($.w/2)+55,($.h/2)-143,'A',20,"Archer","Top",friendlyManagerTopLane));
+    baseManager.addAllocator(new UnitAllocator(3,($.w/2)+80,($.h/2)-145,20,20,($.w/2)+80,($.h/2)-143,'H',20,"Heavy","Top",friendlyManagerTopLane));
     //middle lane allocators
-    baseManager.addAllocator(new UnitAllocator(4,($.w/2)-110,($.h/2)-55,20,20,($.w/2)-110,($.h/2)-53,'L',20,"Light","Middle"));
-    baseManager.addAllocator(new UnitAllocator(5,($.w/2)-85,($.h/2)-55,20,20,($.w/2)-85,($.h/2)-53,'A',20,"Archer","Middle"));
-    baseManager.addAllocator(new UnitAllocator(6,($.w/2)-60,($.h/2)-55,20,20,($.w/2)-60,($.h/2)-53,'H',20,"Heavy","Middle"));
+    baseManager.addAllocator(new UnitAllocator(4,($.w/2)-110,($.h/2)-55,20,20,($.w/2)-110,($.h/2)-53,'L',20,"Light","Middle",friendlyManagerMiddleLane));
+    baseManager.addAllocator(new UnitAllocator(5,($.w/2)-85,($.h/2)-55,20,20,($.w/2)-85,($.h/2)-53,'A',20,"Archer","Middle",friendlyManagerMiddleLane));
+    baseManager.addAllocator(new UnitAllocator(6,($.w/2)-60,($.h/2)-55,20,20,($.w/2)-60,($.h/2)-53,'H',20,"Heavy","Middle",friendlyManagerMiddleLane));
     //bottom lane allocators
-    baseManager.addAllocator(new UnitAllocator(7,($.w/2)+30,($.h)-165,20,20,($.w/2)+30,($.h)-163,'L',20,"Light","Bottom"));
-    baseManager.addAllocator(new UnitAllocator(8,($.w/2)+55,($.h)-165,20,20,($.w/2)+55,($.h)-163,'A',20,"Archer","Bottom"));
-    baseManager.addAllocator(new UnitAllocator(9,($.w/2)+80,($.h)-165,20,20,($.w/2)+80,($.h)-163,'H',20,"Heavy","Bottom"));
+    baseManager.addAllocator(new UnitAllocator(7,($.w/2)+30,($.h)-165,20,20,($.w/2)+30,($.h)-163,'L',20,"Light","Bottom",enemyManagerBottomLane));
+    baseManager.addAllocator(new UnitAllocator(8,($.w/2)+55,($.h)-165,20,20,($.w/2)+55,($.h)-163,'A',20,"Archer","Bottom",enemyManagerBottomLane));
+    baseManager.addAllocator(new UnitAllocator(9,($.w/2)+80,($.h)-165,20,20,($.w/2)+80,($.h)-163,'H',20,"Heavy","Bottom",enemyManagerBottomLane));
 }
 
 //main game loop

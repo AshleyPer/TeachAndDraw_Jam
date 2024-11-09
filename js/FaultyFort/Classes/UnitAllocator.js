@@ -1,5 +1,7 @@
+import Friendly from "./Friendly.js";
+
 export default class UnitAllocator{
-    constructor(id,shapeX,shapeY,shapeHeight,shapeWidth,textX,textY,text,textWidth,type,location){
+    constructor(id,shapeX,shapeY,shapeHeight,shapeWidth,textX,textY,text,textWidth,type,location,friendlyManager){
         this.id = id;
         this.shapeX = shapeX;
         this.shapeY = shapeY;
@@ -15,6 +17,7 @@ export default class UnitAllocator{
         this.textWidth = textWidth;
         this.type = type;
         this.location = location;
+        this.friendlyManager = friendlyManager;
     }
 
     drawAllocator(){
@@ -38,44 +41,16 @@ export default class UnitAllocator{
     checkIfClicked(){
         if($.mouse.x >= this.minClickX && $.mouse.y >= this.minClickY && $.mouse.x <= this.maxClickX && $.mouse.y <= this.maxClickY){
             console.log("yes, I am clicked", this.text)
-            //spawn top lane
-            if(this.location === "Top"){
-                //spawn light
-                if(this.type === "Light"){
-                    
-                //spawn archer
-                }else if(this.type === "Archer"){
-                
-                //spawn heavy
-                }else if(this.type === "Heavy"){
-                    
-                }
 
-            //spawn middle lane   
-            }else if(this.location === "Middle"){
-                //spawn light
-                if(this.type === "Light"){
-                    
-                //spawn archer
-                }else if(this.type === "Archer"){
+            //spawn light
+            if(this.type === "Light"){
+                //this.friendlyManager.addFriendly(new )
+            //spawn archer
+            }else if(this.type === "Archer"){
+            
+            //spawn heavy
+            }else if(this.type === "Heavy"){
                 
-                //spawn heavy
-                }else if(this.type === "Heavy"){
-                    
-                }
-
-            //spawn bottom lane    
-            }else if(this.location === "Bottom"){
-                //spawn light
-                if(this.type === "Light"){
-                    
-                //spawn archer
-                }else if(this.type === "Archer"){
-                
-                //spawn heavy
-                }else if(this.type === "Heavy"){
-                    
-                }
             }
         }
     }

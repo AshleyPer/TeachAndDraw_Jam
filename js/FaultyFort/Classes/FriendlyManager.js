@@ -1,6 +1,22 @@
 export default class FriendlyManager {
-    constructor(){
+    constructor(minClickX,maxClickX,minClickY,maxClickY){
+        this.minClickX = minClickX;
+        this.maxClickX = maxClickX;
+        this.minClickY = minClickY;
+        this.maxClickY = maxClickY;
         this.friendlyGroup = $.makeGroup();
+    }
+
+    calculateRandomX() {
+        let randomX = Math.random() * (this.maxClickX - this.minClickX) + this.minClickX;
+        console.log("randomX=", randomX);
+        return randomX;
+    }
+
+    calculateRandomY() {
+        let randomY = Math.random() * (this.maxClickY - this.minClickY) + this.minClickY;
+        console.log("randomY=", randomY);
+        return randomY;
     }
 
     //add the friendly to the friendly group

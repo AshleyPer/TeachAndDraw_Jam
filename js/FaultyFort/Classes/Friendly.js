@@ -1,5 +1,5 @@
 export default class Friendly {
-    constructor(x,y,width,height,maxHealth,damage,attackRange,resistance,speed){
+    constructor(x,y,width,height,maxHealth,damage,attackRange,resistance,speed,type){
         this.x = x;
         this.y = y;
         this.width = width;
@@ -9,15 +9,21 @@ export default class Friendly {
         this.attackRange = attackRange;
         this.resistance = resistance;
         this.speed = speed;
+        this.type = type;
         this.currentHealth = maxHealth;
-
         this.makeCollider();
     }
 
     //make the collider
     makeCollider(){
         this.collider = $.makeBoxCollider(this.x,this.y,this.width,this.height);
-        this.collider.fill = "#00ff37";
+        if(this.type === "Light"){
+            this.collider.fill = "#adadad";
+        }else if(this.type === "Archer"){
+            this.collider.fill = "#876b4c";
+        }else if(this.type === "Heavy"){
+            this.collider.fill = "#ff8600";
+        }
         this.collider.static = true;
     }
 
@@ -26,11 +32,11 @@ export default class Friendly {
         if(this.currentHealth > 0){
             //max health
             $.colour.fill = "#ff2f00";
-            $.shape.rectangle(this.x, this.y-30, this.maxHealth/3, 8)
+            $.shape.rectangle(this.x, this.y-15, this.maxHealth/5, 4)
 
             //current health
             $.colour.fill = "#2bff00";
-            $.shape.rectangle(this.x - (this.maxHealth-this.currentHealth)/6, this.y-30, this.currentHealth/3, 8)
+            $.shape.rectangle(this.x - (this.maxHealth-this.currentHealth)/10, this.y-15, this.currentHealth/5, 4)
         }
     }
 
