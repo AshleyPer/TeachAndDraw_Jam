@@ -40,6 +40,11 @@ enemyMangers.push(enemyManagerTopLane);
 enemyMangers.push(enemyManagerMiddleLane);
 enemyMangers.push(enemyManagerBottomLane);
 
+
+friendlyManagerTopLane.addEnemyGroup(enemyManagerTopLane);
+friendlyManagerMiddleLane.addEnemyGroup(enemyManagerMiddleLane);
+friendlyManagerBottomLane.addEnemyGroup(enemyManagerBottomLane);
+
 //set canvas dimensions
 $.w = 1470;
 $.h = 600;
@@ -61,9 +66,9 @@ function setup(){
 
     fort.makeCollider();
 
-    friendlyManagerTopLane.addFriendly(new Friendly(friendlyManagerTopLane.calculateRandomX(), friendlyManagerTopLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Light"));
-    friendlyManagerMiddleLane.addFriendly(new Friendly(friendlyManagerMiddleLane.calculateRandomX(), friendlyManagerMiddleLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Archer"));
-    friendlyManagerBottomLane.addFriendly(new Friendly(friendlyManagerBottomLane.calculateRandomX(), friendlyManagerBottomLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Heavy"));
+    friendlyManagerTopLane.addFriendly(new Friendly(friendlyManagerTopLane.calculateRandomX(), friendlyManagerTopLane.calculateRandomY(), 20, 20, 200, 20, 75, 0, 10, "Light", 220));
+    friendlyManagerMiddleLane.addFriendly(new Friendly(friendlyManagerMiddleLane.calculateRandomX(), friendlyManagerMiddleLane.calculateRandomY(), 20, 20, 200, 20, 75, 0, 10, "Archer", 220));
+    friendlyManagerBottomLane.addFriendly(new Friendly(friendlyManagerBottomLane.calculateRandomX(), friendlyManagerBottomLane.calculateRandomY(), 20, 20, 200, 20, 75, 0, 10, "Heavy", 220));
 
     enemyManagerTopLane.addEnemy(new Enemy(360, 60, 40, 40, 200, 20, 200, 0, enemySpeed, 112));
     enemyManagerMiddleLane.addEnemy(new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90));
@@ -234,6 +239,16 @@ function enemyStuff(){
         enemeyManger.handleEnemyActions()
         enemeyManger.diveBombFort();
     }
+
+    for (let friendlyManager of friendlyManagers){
+        friendlyManager.handleActions();
+    }
+
+    for (let friendlyManager of friendlyManagers){
+        friendlyManager.drawProjectiles();
+    }
+
+    
 
     //for drawing the enemy projectiles
     for (let enemeyManger of enemyMangers){
