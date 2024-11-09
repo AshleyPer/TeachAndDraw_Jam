@@ -30,11 +30,43 @@ export default class FriendlyStock {
         $.text.print(($.w)- 100,305,`${this.archerStock} Archers`,150);
     }
 
-    //TODO
-    //this is for removing stock when a user adds a unit to the lanes
-    removeStock(){
-
+    //check if the allocator the user clicked is in stock
+    checkStock(allocatorType){
+        if(allocatorType === "Light"){
+            if(this.lightStock >= 1){
+                this.removeLightStock();
+                return true;
+            }
+        }else if(allocatorType === "Archer"){
+            if(this.archerStock >= 1){
+                this.removeArcherStock();
+                return true;
+            }
+        }else if(allocatorType === "Heavy"){
+            if(this.heavyStock >= 1){
+                this.removeHeavyStock();
+                return true;
+            }
+        }
+        return false;
     }
+
+    //this is for removing stock from a light unit when a user adds it to a lane
+    removeLightStock(){
+        this.lightStock -= 1;
+    }
+
+    //this is for removing stock from an archer unit when a user adds it to a lane
+    removeArcherStock(){
+        this.archerStock -= 1;
+    }
+
+    //this is for removing stock from a heavy unit when a user adds it to a lane
+    removeHeavyStock(){
+        this.heavyStock -= 1;
+    }
+
+    //TODO?
     //this is for adding stock if the user right clicks to remove a unit from the lanes
     addStock(){
 

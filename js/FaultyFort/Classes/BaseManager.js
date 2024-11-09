@@ -72,4 +72,19 @@ export default class BaseManager {
             allocator.drawAllocator();
         }
     }
+
+    //check if an allocator was clicked
+    checkClickedAllocator(){
+        for (let allocator of this.unitAllocatorGroup) {
+            let checkIfAllocatorIsClicked = allocator.checkIfClicked();
+            console.log("checkIfAllocatorIsClicked=",checkIfAllocatorIsClicked)
+            if(checkIfAllocatorIsClicked === true){
+                let isThereStock = this.friendlyStock.checkStock(allocator.type);
+                if(isThereStock === true){
+                    allocator.addNewFriendly(allocator.type);
+                    break;
+                }
+            }
+        }
+    }
 }

@@ -20,6 +20,7 @@ export default class UnitAllocator{
         this.friendlyManager = friendlyManager;
     }
 
+    //draw the allocator icons the user can click to spawn friendly units
     drawAllocator(){
         if(this.type === "Light"){
             $.colour.stroke = "#adadad";
@@ -38,33 +39,17 @@ export default class UnitAllocator{
         $.text.print(this.textX,this.textY,this.text,this.textWidth);
     }
 
+    //check if the user clicked an allocator
     checkIfClicked(){
         if($.mouse.x >= this.minClickX && $.mouse.y >= this.minClickY && $.mouse.x <= this.maxClickX && $.mouse.y <= this.maxClickY){
             console.log("yes, I am clicked", this.text)
-
-            //spawn light
-            if(this.type === "Light"){
-                //this.friendlyManager.addFriendly(new )
-            //spawn archer
-            }else if(this.type === "Archer"){
-            
-            //spawn heavy
-            }else if(this.type === "Heavy"){
-                
-            }
+            return true;
         }
+        return false;
     }
-
-    /*
-    //repurpose this to check if a user clicks on the buttons to spawn the friendlies
-    checkIfClicked(){
-        if($.mouse.x >= this.minClickX && $.mouse.y >= this.minClickY && $.mouse.x <= this.maxClickX && $.mouse.y <= this.maxClickY){
-            let popup = document.querySelector("#base-popup-box");
-            popup.clicked = this.id;
-            popup.style.display = "block";
-        }
+    
+    //add a new friendly based on the allocator the user clicked
+    addNewFriendly(friendlyType){
+        this.friendlyManager.addFriendly(new Friendly(this.friendlyManager.calculateRandomX(), this.friendlyManager.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, friendlyType));
     }
-    //need to check for right click (remove unit) and left click (add unit)
-    // need to call FriendlyStock.removeStock() and FriendlyStock.addStock() based on the click
-    */
 }

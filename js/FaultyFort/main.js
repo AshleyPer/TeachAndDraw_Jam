@@ -151,12 +151,7 @@ function userClicked(){
     }
 
     //check if user clicked the unit creator buttons
-    for (let unitAllocator of baseManager.unitAllocatorGroup){
-        
-        unitAllocator.checkIfClicked();
-    }
-
-
+    baseManager.checkClickedAllocator();
 }
 
 //add event handlers to the buttons for the base tile popup
