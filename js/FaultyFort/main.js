@@ -30,11 +30,11 @@ friendlyManagers.push(friendlyManagerTopLane,friendlyManagerMiddleLane,friendlyM
 const enemyMangers = [];
 
 //create new enemy manager for top lane
-const enemyManagerTopLane = new EnemyManager(friendlyManagers,fort);
+const enemyManagerTopLane = new EnemyManager(friendlyManagerTopLane,fort);
 //create new enemy manager for middle lane
-const enemyManagerMiddleLane = new EnemyManager(friendlyManagers,fort);
+const enemyManagerMiddleLane = new EnemyManager(friendlyManagerMiddleLane,fort);
 //create new enemy manager for bottom lane
-const enemyManagerBottomLane = new EnemyManager(friendlyManagers,fort);
+const enemyManagerBottomLane = new EnemyManager(friendlyManagerBottomLane,fort);
 enemyMangers.push(enemyManagerTopLane);
 enemyMangers.push(enemyManagerMiddleLane);
 enemyMangers.push(enemyManagerBottomLane);

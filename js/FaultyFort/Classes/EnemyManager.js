@@ -25,14 +25,13 @@ export default class EnemyManager {
 
         //loop through the enemy firing group and check if an arrow collides with a friendly
         for (let arrow of this.enemyFiringGroup) {
-            for(let friendlyGroup of this.friendlyGroups){
-                for (let friendly of friendlyGroup.friendlyGroup) {
+
+                for (let friendly of this.friendlyGroups.friendlyGroup) {
                     if (arrow.collides(friendly.collider)) {
                         console.log("bullet collided with friendly?")
                         this.playerStuffHit(friendly, arrow);
                     }
                 }
-            }
         }
     }
 
@@ -68,8 +67,7 @@ export default class EnemyManager {
     //the current logic to make the enemy continue moving if their target dies, is flawed
     //it means if any enemy kills a target, then all the other enemies will continue moving
     checkTargetsInRange(){
-        for (let friendlyGroup of this.friendlyGroups){
-            for (let friendly of friendlyGroup.friendlyGroup) {
+            for (let friendly of this.friendlyGroups.friendlyGroup) {
                 if(friendly.collider.exists !== false){
                     for (let enemy of this.enemyGroup){
                         enemy.checkTargetInRange(friendly.collider);
@@ -85,7 +83,40 @@ export default class EnemyManager {
                     }
                 }
             }
+    }
+    checkAnyTargetInRange(){
+        for (let friendlyGroup of this.friendlyGroups){
+            for (let friendly of friendlyGroup.friendlyGroup) {
+                if(friendly.collider.exists !== false){
+                    for (let enemy of this.enemyGroup){
+                        if (enemy.checkTargetInRange(friendly.collider)){
+                            return true;
+                        }
+                    }
+                }
+            }
         }
+        return false;
+    }
+
+    checkClosestEnemy(){
+        //closestEnemy = 
+        for (let friendlyGroup of this.friendlyGroups){
+            for (let friendly of friendlyGroup.friendlyGroup) {
+                if(friendly.collider.exists !== false){
+                    for (let enemy of this.enemyGroup){
+                        if (enemy.checkTargetInRange(friendly.collider)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        return false;
+    }
+    }
+
+    checkDistance(t1,t2){
+        return (t1.x - t2.x)^2 + (t1.y - t2.y)^2;
     }
 
     diveBombFort(){
