@@ -46,10 +46,13 @@ export default class BaseManager {
             this.friendlyStock.goldToGenerate += 10;
         }else if(tileText === "+1 Heavy"){
             this.friendlyStock.heavyStock += 1;
+            this.friendlyStock.roundHeavyStock += 1;
         }else if(tileText === "+2 Light"){
             this.friendlyStock.lightStock += 2;
+            this.friendlyStock.roundLightStock += 2;
         }else if(tileText === "+1 Archer"){
             this.friendlyStock.archerStock += 1;
+            this.friendlyStock.roundArcherStock += 1;
         }
     }
 
@@ -86,5 +89,10 @@ export default class BaseManager {
                 }
             }
         }
+    }
+
+    //increment gold for a round
+    incrementGold(){
+        this.currentGold += this.friendlyStock.goldToGenerate;
     }
 }

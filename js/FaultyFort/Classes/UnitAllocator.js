@@ -50,6 +50,6 @@ export default class UnitAllocator{
     
     //add a new friendly based on the allocator the user clicked
     addNewFriendly(friendlyType){
-        this.friendlyManager.addFriendly(new Friendly(this.friendlyManager.calculateRandomX(), this.friendlyManager.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, friendlyType));
+        this.friendlyManager.addFriendly(new Friendly(this.friendlyManager.calculateRandomX(), this.friendlyManager.calculateRandomY(), 20, 20, 200, 20, 75, 0, 10, friendlyType, 220));
     }
 }

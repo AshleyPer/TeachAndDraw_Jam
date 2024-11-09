@@ -4,6 +4,7 @@ export default class EnemyManager {
         this.enemyGroup = $.makeGroup();
         this.enemyFiringGroup = $.makeGroup();
         this.fort = fort;
+        this.enemyCount = 0;
     }
 
     //add the enemy to the enemy group
@@ -84,7 +85,6 @@ export default class EnemyManager {
                 for (let enemy of this.enemyGroup){
                     enemy.collider.speed = enemy.speed;
                     enemy.shooting = false;
-                    
                 }
             }
         }
@@ -140,15 +140,34 @@ export default class EnemyManager {
     }
 
     diveBombFort(){
-        for (let enemy of this.enemyGroup){
-            if (enemy.collider.collides(this.fort.collider)) {
-                this.fort.takeDamage(enemy.damage);
-                enemy.collider.remove();
+        let indexToRemove = null;
+        for(let i = 0; i < this.enemyGroup.length; i++){
+            if(this.enemyGroup[i].collider.collides(this.fort.collider)){
+                this.fort.takeDamage(this.enemyGroup[i].damage);
+                this.enemyGroup[i].collider.remove();
+                indexToRemove = i;
+            }
+        }
+        if(indexToRemove !== null){
+            this.enemyGroup.splice(indexToRemove,1);
+        }
+    }
+
+    //TODO make sure the totalEnemies in main.js line 320ish, is correctly reading how many enemies exist
+    //let david handle this tomorrow
+    cullDeadEnemies(){
+        for(let i = 0; i < this.enemyGroup.length; i++){
+            if(this.enemyGroup[i].collider.exists === false){
+
             }
         }
     }
 
     secondsSinceEpoch(){
         return Math.round(Date.now() / 1000);
+    }
+
+    checkEnemyCount(){
+        return this.enemyGroup.length;
     }
 }

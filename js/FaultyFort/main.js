@@ -55,10 +55,11 @@ const baseManager = new BaseManager();
 //temporarily setting speed high, for development purposes
 let enemySpeed = 10;
 
-let roundStarted = false;
-let roundCountdownTimer = "1:00";
-
 let round = new Round();
+
+const startRoundButton = $.makeButton($.w / 2 - 20, 90, 105, 35, "Start Round");
+startRoundButton.background = "#80ffb3";
+startRoundButton.secondaryColour = "#54ebff";
 
 //setup the game, only called on frame 0
 function setup(){
@@ -66,13 +67,13 @@ function setup(){
 
     fort.makeCollider();
 
-    friendlyManagerTopLane.addFriendly(new Friendly(friendlyManagerTopLane.calculateRandomX(), friendlyManagerTopLane.calculateRandomY(), 20, 20, 200, 20, 75, 0, 10, "Light", 220));
-    friendlyManagerMiddleLane.addFriendly(new Friendly(friendlyManagerMiddleLane.calculateRandomX(), friendlyManagerMiddleLane.calculateRandomY(), 20, 20, 200, 20, 75, 0, 10, "Archer", 220));
-    friendlyManagerBottomLane.addFriendly(new Friendly(friendlyManagerBottomLane.calculateRandomX(), friendlyManagerBottomLane.calculateRandomY(), 20, 20, 200, 20, 75, 0, 10, "Heavy", 220));
+    /*friendlyManagerTopLane.addFriendly(new Friendly(friendlyManagerTopLane.calculateRandomX(), friendlyManagerTopLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Light"));
+    friendlyManagerMiddleLane.addFriendly(new Friendly(friendlyManagerMiddleLane.calculateRandomX(), friendlyManagerMiddleLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Archer"));
+    friendlyManagerBottomLane.addFriendly(new Friendly(friendlyManagerBottomLane.calculateRandomX(), friendlyManagerBottomLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Heavy"));
 
     enemyManagerTopLane.addEnemy(new Enemy(360, 60, 40, 40, 200, 20, 200, 0, enemySpeed, 112));
     enemyManagerMiddleLane.addEnemy(new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90));
-    enemyManagerBottomLane.addEnemy(new Enemy(360, $.h - 60, 40, 40, 200, 20, 200, 0, enemySpeed, 68));
+    enemyManagerBottomLane.addEnemy(new Enemy(360, $.h - 60, 40, 40, 200, 20, 200, 0, enemySpeed, 68));*/
 
     //add base tiles to base manager
     baseManager.addBaseTile(new BaseTile(1,($.w/2)+185,120,100,80));
@@ -295,14 +296,56 @@ function drawLanesAndSpawnPoints(){
 
 //function for handling the concept of rounds
 function roundStuff(){
-    if(roundStarted === false){
+    if(round.roundTimer.isDone() === false){
         $.colour.fill = "#ffffff";
         $.text.size = 27;
         $.text.print($.w/2 - 20,20, "Round starts in:", 250);
         $.text.print($.w/2 - 20,50, Math.round(round.roundTimer.frames/60).toString(), 250);
+        startRoundButton.draw();
     }
     round.roundTimer.update();
-    console.log("round.roundTimer", round.roundTimer.frames);
-    console.log("$.time.averageFps=",$.time.averageFps)
-    //console.log(Math.round($.frameCount/$.time.averageFps));
+
+    //if user clicks "Start Round"
+    if(startRoundButton.up){
+        round.roundTimer.setDone();
+        round.incrementRound();
+
+        if(round.roundNumber !== 1){
+            baseManager.incrementGold();
+        }
+        //spawn enemies here
+        spawnEnemies();
+    }
+
+    //check enemy count if not round 0, should determine if all enemies are dead
+    if(round.roundNumber !== 0 && round.roundTimer.isDone()){
+        let totalEnemies = 0;
+        for (let enemeyManger of enemyMangers){
+            totalEnemies +=enemeyManger.checkEnemyCount();
+        }
+        console.log("totalEnemies=", totalEnemies)
+        if(totalEnemies === 0){
+            //round over, start next round
+            console.log("all enemies dead, time to start next round!");
+            round.roundTimer.resetTimer(3600);
+            baseManager.friendlyStock.resetStock();
+        }
+    }
+}
+
+//spawn enemies
+function spawnEnemies(){
+    //top lane spawn
+    for(let i = 0; i < round.topLaneEnemyNumber; i++){
+        enemyManagerTopLane.addEnemy(new Enemy(330 - i * 80, 60 - i * 30, 40, 40, 200, 20, 200, 0, enemySpeed, 112));
+    }
+    console.log(round.middleLaneEnemyNumber)
+    //middle lane spawn
+    for(let i = 0; i < round.middleLaneEnemyNumber; i++){
+        enemyManagerMiddleLane.addEnemy(new Enemy(80 - i * 80, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90));
+    }
+    //bottom lane spawn
+    for(let i = 0; i < round.bottomLaneEnemyNumber; i++){
+        enemyManagerBottomLane.addEnemy(new Enemy(330 - i * 80, $.h - 60 + i * 30, 40, 40, 200, 20, 200, 0, enemySpeed, 68));
+    }
 }
