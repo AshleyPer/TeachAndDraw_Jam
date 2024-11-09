@@ -25,13 +25,12 @@ export default class EnemyManager {
 
         //loop through the enemy firing group and check if an arrow collides with a friendly
         for (let arrow of this.enemyFiringGroup) {
-
-                for (let friendly of this.friendlyGroups.friendlyGroup) {
-                    if (arrow.collides(friendly.collider)) {
-                        console.log("bullet collided with friendly?")
-                        this.playerStuffHit(friendly, arrow);
-                    }
+            for (let friendly of this.friendlyGroups.friendlyGroup) {
+                if (arrow.collides(friendly.collider)) {
+                    console.log("bullet collided with friendly?")
+                    this.playerStuffHit(friendly, arrow);
                 }
+            }
         }
     }
 
@@ -41,7 +40,6 @@ export default class EnemyManager {
             let arrow = this.createArrow(enemy,friendly)
             arrow.lifespan = 1000;
             this.enemyFiringGroup.push(arrow);
-
         }
     }
 
@@ -70,26 +68,24 @@ export default class EnemyManager {
         return degree_angle - 180;
     }
 
-    //TODO: fix the movement mentioned in the below 2 comments
-    //the current logic to make the enemy continue moving if their target dies, is flawed
     //it means if any enemy kills a target, then all the other enemies will continue moving
     checkTargetsInRange(){
-            for (let friendly of this.friendlyGroups.friendlyGroup) {
-                if(friendly.collider.exists !== false){
-                    for (let enemy of this.enemyGroup){
-                        enemy.checkTargetInRange(friendly.collider);
-                        if(enemy.shooting === true){
-                            this.enemyFiring(enemy);
-                        }
-                    }
-                }else{
-                    for (let enemy of this.enemyGroup){
-                        enemy.collider.speed = enemy.speed;
-                        enemy.shooting = false;
-                        
+        for (let friendly of this.friendlyGroups.friendlyGroup) {
+            if(friendly.collider.exists !== false){
+                for (let enemy of this.enemyGroup){
+                    enemy.checkTargetInRange(friendly.collider);
+                    if(enemy.shooting === true){
+                        this.enemyFiring(enemy);
                     }
                 }
+            }else{
+                for (let enemy of this.enemyGroup){
+                    enemy.collider.speed = enemy.speed;
+                    enemy.shooting = false;
+                    
+                }
             }
+        }
     }
     checkAnyTargetInRange(){
         for (let friendlyGroup of this.friendlyGroups){
@@ -111,17 +107,14 @@ export default class EnemyManager {
 
         for (let friendly of this.friendlyGroups.friendlyGroup) {
             if(friendly.collider.exists !== false){
-                    if (enemy.justCheckTargetInRange(friendly.collider)){
-                        if (closestFriendly === undefined){
-                            closestFriendly = friendly;
-                        }else if (this.checkDistance(friendly,enemy) < this.checkDistance(closestFriendly,enemy)){
-                            closestFriendly = friendly;
-                        }
-                    }else{
-                        // not in range
+                if (enemy.justCheckTargetInRange(friendly.collider)){
+                    if (closestFriendly === undefined){
+                        closestFriendly = friendly;
+                    }else if (this.checkDistance(friendly,enemy) < this.checkDistance(closestFriendly,enemy)){
+                        closestFriendly = friendly;
                     }
+                }
             }
-            
         }
         return closestFriendly;
     }

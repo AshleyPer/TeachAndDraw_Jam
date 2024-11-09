@@ -7,6 +7,7 @@ import FriendlyManager from "./Classes/FriendlyManager.js";
 import BaseManager from "./Classes/BaseManager.js";
 import BaseTile from "./Classes/BaseTile.js";
 import UnitAllocator from "./Classes/UnitAllocator.js";
+import Round from "./Classes/Round.js";
 
 $.use(update);
 
@@ -49,6 +50,11 @@ const baseManager = new BaseManager();
 //temporarily setting speed high, for development purposes
 let enemySpeed = 10;
 
+let roundStarted = false;
+let roundCountdownTimer = "1:00";
+
+let round = new Round();
+
 //setup the game, only called on frame 0
 function setup(){
     console.log('we HOT!');
@@ -89,9 +95,11 @@ function setup(){
     baseManager.addAllocator(new UnitAllocator(5,($.w/2)-85,($.h/2)-55,20,20,($.w/2)-85,($.h/2)-53,'A',20,"Archer","Middle",friendlyManagerMiddleLane));
     baseManager.addAllocator(new UnitAllocator(6,($.w/2)-60,($.h/2)-55,20,20,($.w/2)-60,($.h/2)-53,'H',20,"Heavy","Middle",friendlyManagerMiddleLane));
     //bottom lane allocators
-    baseManager.addAllocator(new UnitAllocator(7,($.w/2)+30,($.h)-165,20,20,($.w/2)+30,($.h)-163,'L',20,"Light","Bottom",enemyManagerBottomLane));
-    baseManager.addAllocator(new UnitAllocator(8,($.w/2)+55,($.h)-165,20,20,($.w/2)+55,($.h)-163,'A',20,"Archer","Bottom",enemyManagerBottomLane));
-    baseManager.addAllocator(new UnitAllocator(9,($.w/2)+80,($.h)-165,20,20,($.w/2)+80,($.h)-163,'H',20,"Heavy","Bottom",enemyManagerBottomLane));
+    baseManager.addAllocator(new UnitAllocator(7,($.w/2)+30,($.h)-165,20,20,($.w/2)+30,($.h)-163,'L',20,"Light","Bottom",friendlyManagerBottomLane));
+    baseManager.addAllocator(new UnitAllocator(8,($.w/2)+55,($.h)-165,20,20,($.w/2)+55,($.h)-163,'A',20,"Archer","Bottom",friendlyManagerBottomLane));
+    baseManager.addAllocator(new UnitAllocator(9,($.w/2)+80,($.h)-165,20,20,($.w/2)+80,($.h)-163,'H',20,"Heavy","Bottom",friendlyManagerBottomLane));
+
+
 }
 
 //main game loop
@@ -120,7 +128,9 @@ function update() {
 
     enemyStuff();
 
+    roundStuff();
 }
+
 
 function drawBaseStuff(){
     //base
@@ -266,4 +276,18 @@ function drawLanesAndSpawnPoints(){
     $.shape.line(300,520,740,350)
     $.shape.line(300,600,765,415) //do this
     $.shape.arc(740,350, 100,100, 90,160)
+}
+
+//function for handling the concept of rounds
+function roundStuff(){
+    if(roundStarted === false){
+        $.colour.fill = "#ffffff";
+        $.text.size = 27;
+        $.text.print($.w/2 - 20,20, "Round starts in:", 250);
+        $.text.print($.w/2 - 20,50, Math.round(round.roundTimer.frames/60).toString(), 250);
+    }
+    round.roundTimer.update();
+    console.log("round.roundTimer", round.roundTimer.frames);
+    console.log("$.time.averageFps=",$.time.averageFps)
+    //console.log(Math.round($.frameCount/$.time.averageFps));
 }
