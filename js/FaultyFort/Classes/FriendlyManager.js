@@ -163,6 +163,10 @@ export default class FriendlyManager {
         }
     }
 
+    checkDistance(t1,t2){
+        return (t1.x - t2.x)^2 + (t1.y - t2.y)^2;
+    }
+
     determineArrowDirection(enemy, friendly){
         let radian_angle = Math.atan((enemy.collider.y - friendly.collider.y) / (enemy.collider.x - friendly.collider.x));
         let degree_angle = (radian_angle) * (180 / Math.PI);
