@@ -14,7 +14,7 @@ $.use(update);
 //$.debug = true;
 
 //load the fort icon
-let fort_icon = $.loadImage(0,0,"../images/Fort_Icon.jpg");
+let fort_icon = $.loadImage(0,0,"images/Fort_Icon.jpg");
 //create the fort
 const fort = new Fort($.w - 20, $.h/2, 100, 100, 500, 0, fort_icon);
 
@@ -62,7 +62,7 @@ startRoundButton.background = "#80ffb3";
 startRoundButton.secondaryColour = "#54ebff";
 
 //load gameOver image
-let gameOver = $.loadImage($.w /2,$.h/2,"../images/Game_Over.png");
+let gameOver = $.loadImage($.w /2,$.h/2,"images/Game_Over.png");
 
 //setup the game, only called on frame 0
 function setup(){
