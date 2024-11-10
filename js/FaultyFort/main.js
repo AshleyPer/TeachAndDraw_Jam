@@ -61,19 +61,14 @@ const startRoundButton = $.makeButton($.w / 2 - 20, 90, 105, 35, "Start Round");
 startRoundButton.background = "#80ffb3";
 startRoundButton.secondaryColour = "#54ebff";
 
+//load gameOver image
+let gameOver = $.loadImage($.w /2,$.h/2,"../images/Game_Over.png");
+
 //setup the game, only called on frame 0
 function setup(){
     console.log('we HOT!');
 
     fort.makeCollider();
-
-    /*friendlyManagerTopLane.addFriendly(new Friendly(friendlyManagerTopLane.calculateRandomX(), friendlyManagerTopLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Light"));
-    friendlyManagerMiddleLane.addFriendly(new Friendly(friendlyManagerMiddleLane.calculateRandomX(), friendlyManagerMiddleLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Archer"));
-    friendlyManagerBottomLane.addFriendly(new Friendly(friendlyManagerBottomLane.calculateRandomX(), friendlyManagerBottomLane.calculateRandomY(), 20, 20, 200, 20, 20, 0, 2, "Heavy"));
-
-    enemyManagerTopLane.addEnemy(new Enemy(360, 60, 40, 40, 200, 20, 200, 0, enemySpeed, 112));
-    enemyManagerMiddleLane.addEnemy(new Enemy(100, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90));
-    enemyManagerBottomLane.addEnemy(new Enemy(360, $.h - 60, 40, 40, 200, 20, 200, 0, enemySpeed, 68));*/
 
     //add base tiles to base manager
     baseManager.addBaseTile(new BaseTile(1,($.w/2)+185,120,100,80));
@@ -114,27 +109,31 @@ function update() {
         setup();
     }
 
-    fort.drawCollider();
+    if(fort.gameOver === false){
+        fort.drawCollider();
 
-    friendlyManagerTopLane.drawFriendlies();
-    friendlyManagerMiddleLane.drawFriendlies();
-    friendlyManagerBottomLane.drawFriendlies();
-
-    drawLanesAndSpawnPoints();
-
-    //draw the base
-    drawBaseStuff();
-
-    //check if the user clicked
-    if($.mouse.leftReleased){
-        userClicked();
+        friendlyManagerTopLane.drawFriendlies();
+        friendlyManagerMiddleLane.drawFriendlies();
+        friendlyManagerBottomLane.drawFriendlies();
+    
+        drawLanesAndSpawnPoints();
+    
+        //draw the base
+        drawBaseStuff();
+    
+        //check if the user clicked
+        if($.mouse.leftReleased){
+            userClicked();
+        }
+    
+        debugStuff();
+    
+        enemyStuff();
+    
+        roundStuff();
+    }else{
+        gameOver.draw();
     }
-
-    debugStuff();
-
-    enemyStuff();
-
-    roundStuff();
 }
 
 

@@ -8,6 +8,7 @@ export default class Fort {
         this.resistance = resistance;
         this.currentHealth = maxHealth;
         this.icon = icon;
+        this.gameOver = false;
     }
 
     //make the collider
@@ -26,6 +27,7 @@ export default class Fort {
     //draw fort health bars
     drawHealthBar(){
         if(this.currentHealth > 0){
+            $.colour.stroke = "#000000";
             //max health
             $.colour.fill = "#ff2f00";
             $.shape.rectangle(($.w/2)+330, 55, 450, 8)
@@ -55,8 +57,8 @@ export default class Fort {
         if(this.currentHealth <= 0){
             //fort is dead...
             //should be GAME OVER
+            this.gameOver = true;
             this.collider.remove();
-            //also need to remove the instance of the class later
         }
     }
 }
