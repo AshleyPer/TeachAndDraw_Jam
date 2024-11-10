@@ -71,8 +71,8 @@ export default class FriendlyManager {
         for (let arrow of this.friendlyFiringGroup) {
             for (let enemy of this.enemyGroup.enemyGroup) {
                 if (arrow.collides(enemy.collider)) {
-                    console.log("bullet collided with friendly?")
-                    this.enemeyStuffHit(enemy, arrow);
+                    console.log("bullet collided with enemy?")
+                    //this.enemeyStuffHit(enemy, arrow);
                 }
             }
         }
