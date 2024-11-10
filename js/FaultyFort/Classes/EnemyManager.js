@@ -123,14 +123,16 @@ export default class EnemyManager {
 
     handleEnemyActions(){
         for (let enemy of this.enemyGroup){
-            let nearestFriendly = this.checkClosestFriendly(enemy);
-            if (nearestFriendly){
-                enemy.collider.speed = 0;
-                enemy.shooting = true;
-                this.enemyFiring(enemy, nearestFriendly);
-            }else{
-                enemy.collider.speed = enemy.speed;
-                enemy.shooting = false;
+            if(enemy.collider.exists){
+                let nearestFriendly = this.checkClosestFriendly(enemy);
+                if (nearestFriendly){
+                    enemy.collider.speed = 0;
+                    enemy.shooting = true;
+                    this.enemyFiring(enemy, nearestFriendly);
+                }else{
+                    enemy.collider.speed = enemy.speed;
+                    enemy.shooting = false;
+                }
             }
         }
     }
