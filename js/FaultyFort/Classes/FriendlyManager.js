@@ -66,13 +66,13 @@ export default class FriendlyManager {
 
     drawProjectiles(){
         this.friendlyFiringGroup.draw()
-        return;
+        //return;
         //loop through the enemy firing group and check if an arrow collides with a friendly
         for (let arrow of this.friendlyFiringGroup) {
             for (let enemy of this.enemyGroup.enemyGroup) {
                 if (arrow.collides(enemy.collider)) {
                     console.log("bullet collided with friendly?")
-                    //this.playerStuffHit(friendly, arrow);
+                    this.enemeyStuffHit(enemy, arrow);
                 }
             }
         }
@@ -174,5 +174,10 @@ export default class FriendlyManager {
     }
     secondsSinceEpoch(){
         return Math.round(Date.now() / 1000);
+    }
+
+    enemeyStuffHit(enemyStuff, arrow){
+        enemyStuff.takeDamage(arrow.damage);
+        arrow.remove();
     }
 }
