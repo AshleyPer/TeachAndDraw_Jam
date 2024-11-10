@@ -47,4 +47,14 @@ export default class Enemy {
             return false;
         }
     }
+
+    takeDamage(damage){
+        this.currentHealth -= damage;
+        //check if the friendly still lives
+        if(this.currentHealth <= 0){
+            //friendly is dead...
+            this.collider.remove();
+            //also need to remove the instance of the class later
+        }
+    }
 }
