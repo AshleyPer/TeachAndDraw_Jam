@@ -33,7 +33,7 @@ export default class FriendlyManager {
     drawFriendlies(){
         for (let friendly of this.friendlyGroup) {
             friendly.collider.draw();
-            //friendly.drawHealthBar();
+            friendly.drawHealthBar();
         }
     }
 
@@ -72,7 +72,7 @@ export default class FriendlyManager {
             for (let enemy of this.enemyGroup.enemyGroup) {
                 if (arrow.collides(enemy.collider)) {
                     console.log("bullet collided with enemy?")
-                    //this.enemeyStuffHit(enemy, arrow);
+                    this.enemeyStuffHit(enemy, arrow);
                 }
             }
         }
@@ -132,7 +132,7 @@ export default class FriendlyManager {
             if(friendly.collider.exists){
                 let nearestWalkableEnemy = this.checkClosestWalkEnemy(friendly);
                 let nearestShootableEnemy = this.checkClosestEnemy(friendly);
-                console.log('nearestWalkableEnemy', nearestWalkableEnemy);
+                //console.log('nearestWalkableEnemy', nearestWalkableEnemy);
                 if (nearestWalkableEnemy && !nearestShootableEnemy){
                     let direction = friendly.collider.getAngleToPoint(nearestWalkableEnemy.collider.x,nearestWalkableEnemy.collider.y);
                     friendly.collider.direction = direction
@@ -178,6 +178,7 @@ export default class FriendlyManager {
 
     enemeyStuffHit(enemyStuff, arrow){
         enemyStuff.takeDamage(arrow.damage);
-        arrow.remove();
+        arrow.lifespan = 0;
+        arrow.fill = "#00000000"
     }
 }

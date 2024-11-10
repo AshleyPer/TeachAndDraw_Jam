@@ -248,11 +248,14 @@ function enemyStuff(){
         friendlyManager.drawProjectiles();
     }
 
-    
-
     //for drawing the enemy projectiles
     for (let enemeyManger of enemyMangers){
         enemeyManger.drawProjectiles()
+    }
+
+    //for removing any dead enemies from the group
+    for (let enemeyManger of enemyMangers){
+        enemeyManger.cullDeadEnemies();
     }
 }
 
@@ -308,10 +311,6 @@ function roundStuff(){
     if(startRoundButton.up){
         round.roundTimer.setDone();
         round.incrementRound();
-
-        if(round.roundNumber !== 1){
-            baseManager.incrementGold();
-        }
         //spawn enemies here
         spawnEnemies();
     }
@@ -328,6 +327,9 @@ function roundStuff(){
             console.log("all enemies dead, time to start next round!");
             round.roundTimer.resetTimer(3600);
             baseManager.friendlyStock.resetStock();
+            if(round.roundNumber !== 0){
+                baseManager.incrementGold();
+            }
         }
     }
 }
@@ -338,7 +340,7 @@ function spawnEnemies(){
     for(let i = 0; i < round.topLaneEnemyNumber; i++){
         enemyManagerTopLane.addEnemy(new Enemy(330 - i * 80, 60 - i * 30, 40, 40, 200, 20, 200, 0, enemySpeed, 112));
     }
-    console.log(round.middleLaneEnemyNumber)
+    //console.log(round.middleLaneEnemyNumber)
     //middle lane spawn
     for(let i = 0; i < round.middleLaneEnemyNumber; i++){
         enemyManagerMiddleLane.addEnemy(new Enemy(80 - i * 80, $.h/2, 40, 40, 200, 20, 200, 0, enemySpeed, 90));

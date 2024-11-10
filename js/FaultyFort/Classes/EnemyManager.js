@@ -158,9 +158,9 @@ export default class EnemyManager {
     //TODO make sure the totalEnemies in main.js line 320ish, is correctly reading how many enemies exist
     //let david handle this tomorrow
     cullDeadEnemies(){
-        for(let i = 0; i < this.enemyGroup.length; i++){
-            if(this.enemyGroup[i].collider.exists === false){
-
+        for (let i = this.enemyGroup.length - 1; i >= 0; i--) {
+            if (this.enemyGroup[i].collider.exists === false || this.enemyGroup[i] === undefined) {
+                this.enemyGroup.splice(i, 1);
             }
         }
     }

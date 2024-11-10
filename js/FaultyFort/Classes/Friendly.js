@@ -4,14 +4,22 @@ export default class Friendly {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.maxHealth = maxHealth;
-        this.damage = damage;
+        if(type === "Light"){
+            this.damage = 20;
+            this.maxHealth = 200;
+        }else if(type === "Archer"){
+            this.damage = 40;
+            this.maxHealth = 150;
+        }else if(type === "Heavy"){
+            this.damage = 20;
+            this.maxHealth = 400;
+        }
         this.attackRange = attackRange;
         this.moveRange = moveRange;
         this.resistance = resistance;
         this.speed = speed;
         this.type = type;
-        this.currentHealth = maxHealth;
+        this.currentHealth = this.maxHealth;
         this.lastShot = 0;
         this.makeCollider();
     }
@@ -30,18 +38,17 @@ export default class Friendly {
     }
 
     //draw friendly health bars
-    /*
+
     drawHealthBar(){
         if(this.currentHealth > 0){
-            //max health
             $.colour.fill = "#ff2f00";
-            $.shape.rectangle(this.x, this.y-15, this.maxHealth/5, 4)
+            $.shape.rectangle(this.collider.x, this.collider.y-15, this.maxHealth/5, 4)
 
             //current health
             $.colour.fill = "#2bff00";
-            $.shape.rectangle(this.x - (this.maxHealth-this.currentHealth)/10, this.y-15, this.currentHealth/5, 4)
+            $.shape.rectangle(this.collider.x - (this.maxHealth-this.currentHealth)/10, this.collider.y-15, this.currentHealth/5, 4)
         }
-    }*/
+    }
 
     //check if an enemy is in attack range
     checkTargetInRange(){
